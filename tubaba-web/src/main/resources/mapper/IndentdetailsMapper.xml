@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.IndentdetailsMapper">
+	<resultMap type="com.znsd.tubaba.entity.Indentdetails" id="indentdetailsMapper">
+	    <id property="id" column="id"/>
+	    <result property="orderstime" column="orderstime"/>
+	    <result property="peopleCount" column="peopleCount"/>
+	    <result property="copies" column="copies"/>
+	    <result property="starttime" column="starttime"/>
+	    <result property="endtime" column="endtime"/>
+	    <result property="status" column="status"/>
+	    <association property="user" fetchType="lazy" column="userid" select="com.znsd.tubaba.mapper.UserMapper.findById" />
+	    <association property="scenic" fetchType="lazy" column="scenicid" select="com.znsd.tubaba.mapper.ScenicMapper.queryScenicById" />
+	    <association property="scenicway" fetchType="lazy" column="scenicwayId" select="com.znsd.tubaba.mapper.ScenicwayMapper.queryById" />
+ 	</resultMap>
+ 	
+ 	<!-- 根据id查询订单详情 -->
+ 	<select id="findById" resultMap="indentdetailsMapper">
+ 		select * from indentdetails where id=#{id}
+ 	</select>
+ 	<!-- 增加订单详情 -->
+ 	<insert id="addIndentdetails" keyProperty="id" useGeneratedKeys="true">
+ 		INSERT INTO indentdetails(orderstime,peopleCount,copies,scenicwayId,starttime,endtime,userid,STATUS,scenicid) 
+		VALUES(#{orderstime},#{peopleCount},#{copies},#{scenicway.id},#{starttime},#{endtime},#{user.id},0,#{scenic.id});
+ 	</insert>
+	
+</mapper>

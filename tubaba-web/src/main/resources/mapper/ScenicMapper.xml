@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.ScenicMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+
+	<resultMap type="com.znsd.tubaba.entity.Scenic" id="scenicMapper">
+		<!-- 查询热搜景点信息 -->
+		<id property="id" column="id" />
+		<result property="scenicname" column="scenicname" />
+		<result property="scenicname_pinyin" column="scenicname_pinyin" />
+		<result property="address" column="address" />
+		<result property="introduce" column="introduce" />
+		<result property="province" column="province" />
+		<result property="city" column="city" />
+		<result property="floor_price" column="floor_price" />
+		<result property="coverImage" column="coverImage" />
+		<result property="praise" column="praise" />
+		<!-- 一对一映射产品分类信息 -->
+		<association property="title" column="titleid"
+			select="com.znsd.tubaba.mapper.TitleMapper.queryTitleById" />
+		<collection property="scenicimages" column="id"
+			select="com.znsd.tubaba.mapper.ScenicimageMapper.queryScenicimageByScenicwayId"></collection>
+			
+	</resultMap>
+	<!-- 通过id查询景点信息 -->
+	<select id="queryScenicById" parameterType="int" resultMap="scenicMapper">
+		select * from scenic
+		where id=#{id}
+	</select>
+	
+	<select id="queryOne" parameterType="int" resultMap="scenicMapper">
+		select * from scenic
+		where id=#{id}
+	</select>
+	
+	
+	<!-- 查询热搜景点信息 -->
+	<select id="queryHotBotScenic" resultMap="scenicMapper">
+		SELECT sc.* FROM scenic
+		sc INNER JOIN scenicstatus scsts ON sc.id = scsts.scenicId
+		where `status` = 0
+		ORDER BY
+		scsts.browseCount DESC
+	</select>
+	<!-- 按景点名称模糊查询景点信息 -->
+	<select id="queryScenicBySearchScenicname" resultMap="scenicMapper">
+		select *
+		from scenic where scenicname like concat('%',#{scenicname},'%')
+	</select>
+	<!-- 按景点名称模糊查询景点信息 -->
+	<select id="queryScenicBySearchScenicnamePinYin" resultMap="scenicMapper">
+		select * from scenic where scenicname_pinyin like
+		concat('%',#{scenicname_pinyin},'%') ORDER BY scenicname_pinyin
+	</select>
+	<!-- 按景点名称或景点名称的拼音模糊查询景点信息 -->
+	<select id="queryScenicBySearchScenicnameOrScenicnamePinYin"
+		resultMap="scenicMapper">
+		select sc.* from scenic sc
+		INNER JOIN scenicstatus scsts ON sc.id = scsts.scenicId
+		<where>
+			<if test="scenicname != null and scenicname != ''">
+				and scenicname like concat('%',#{scenicname},'%')
+			</if>
+			<if test="scenicname_pinyin != null and scenicname_pinyin != ''">
+				and scenicname_pinyin like
+				concat('%',#{scenicname_pinyin},'%')
+			</if>
+			and `status` = 0
+		</where>
+	</select>
+	<!-- 通过城市查询对应的所有景点 -->
+	<select id="queryScenicByCity" parameterType="String"  resultMap="scenicMapper">
+		SELECT * FROM scenic WHERE city = #{city}
+		AND id IN(SELECT scenicid FROM scenicstatus WHERE `status` = 0 )
+	</select>
+	<!-- 查询所有正常状态的景点信息 -->
+	<select id="queryScenicAll" resultMap="scenicMapper">
+		SELECT * FROM scenic WHERE
+		id IN(SELECT scenicid FROM scenicstatus WHERE `status` = 0 )
+	</select>
+	<!-- 查询所有删除状态的景点信息 -->
+	<select id="queryScenicAllDel" resultMap="scenicMapper">
+		SELECT * FROM scenic WHERE
+		id IN(SELECT scenicid FROM scenicstatus WHERE `status` = 1 )
+	</select>
+
+	<!-- 单个查询 -->
+	<select id="queryScenic" parameterType="int" resultMap="scenicMapper">
+		select *
+		from scenic where id=#{id}
+	</select>
+
+	<!-- 删除景点，修改景点状态 -->
+	<update id="delScenic">
+		UPDATE scenicstatus SET `status` = 1
+		WHERE scenicId =
+		#{id}
+	</update>
+	<!-- 恢复景点，修改景点状态 -->
+	<update id="delScenicAll">
+		UPDATE scenicstatus SET `status` = 0
+		WHERE scenicId =
+		#{id}
+	</update>
+
+	<select id="queryByScenicWithAddress" resultMap="scenicMapper">
+		select s.* from
+		scenic s,indentdetails i where s.id=i.scenicid
+		and s.city in(select
+		area from address where upid=(select upid from
+		address where area like
+		concat(#{param1},'%') and upid>0))
+		and YEAR(i.orderstime) = YEAR(NOW())
+		and
+		QUARTER(i.orderstime)=QUARTER(NOW()) GROUP BY i.scenicid ORDER BY
+		COUNT(*) DESC;
+	</select>
+	<select id="qeuryByScenicWithAddressAndIndentdetails" resultMap="scenicMapper">
+		select s.* from scenic s,indentdetails i where s.id=i.scenicid
+		and city
+		in(select area from address where upid=(select upid from address
+		where
+		area like concat(#{param2},'%') and upid>0))
+		group by ${param1} order
+		by count(*)
+		desc
+	</select>
+	<select id="queryByScenicWithActivity" resultMap="scenicMapper">
+		select
+		s.*,IFNULL(sum(m.`number`)/(COUNT(*)*5)*100,0) praise from
+		scenic s,activity_type
+		at,activity a,discounts d,indentdetails
+		it,remark r,mark m,indent i
+		where
+		s.id=it.`scenicid` and
+		it.`id`=i.`indentdetailsId` and
+		i.`id`=r.`indentid` and
+		r.`markid`=m.`id` and
+		s.id=d.scenicid
+		and
+		at.id=a.typeid and
+		d.activityid=a.id and
+		at.name=#{param1} GROUP BY s.id
+	</select>
+	<select id="queryByScenicWithThemeWithAddress" resultMap="scenicMapper">
+		select
+		s.*,IFNULL(sum(m.`number`)/(COUNT(*)*5)*100,0) praise from title t,scenic s, indentdetails it
+		,remark r,mark m,indent i
+		where t.id=s.titleid
+		and it.`id`=i.`indentdetailsId` and
+		i.`id`=r.`indentid` and
+		r.`markid`=m.`id` and
+		it.scenicid=s.id
+		<if test="title!=null and title!=''">
+			and t.type=#{param1}
+		</if>
+		<if test="scope!=null and scope!=''">
+			and s.city in(select
+			area from address where upid=(select
+			upid from
+			address where area like
+			concat(#{param2},'%') and upid>0))
+		</if>
+		group by
+		it.scenicid order by count(*) desc;
+	</select>
+	<select id="qeuryByScenicWithIndentdetails" resultMap="scenicMapper">
+		select s.*
+		from scenic s,indentdetails i where s.id=i.scenicid
+		<if test="frompath!=null and frompath!=''">
+			and s.city like concat(#{param1},'%')
+		</if>
+		group by s.city
+		order by count(*) desc;
+	</select>
+	<!-- 增加景点 -->
+	<insert id="addScenic" parameterType="com.znsd.tubaba.entity.Scenic"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `db_tubaba`.`scenic` (
+		`scenicname`,
+		`scenicname_pinyin`,
+		`address`,
+		`introduce`,
+		`province`,
+		`city`,
+		`headline`,
+		`floor_price`,
+		`titleid`,
+		`hintid`,
+		`coverImage`
+		)
+		VALUES
+		(
+		#{scenicname},
+		#{scenicname_pinyin},
+		#{address},
+		#{introduce},
+		#{province},
+		#{city},
+		#{headline},
+		#{floor_price},
+		#{title.id},
+		#{hint.id},
+		#{coverImage}
+		) ;
+	</insert>
+
+	<!-- 修改景点 -->
+	<update  id="updateScenic" parameterType="com.znsd.tubaba.entity.Scenic">
+		update scenic  
+			<set>
+			   <if test="scenicname!=null and scenicname!=''">
+			  		scenicname =#{scenicname},
+			   </if>
+			   <if test="scenicname_pinyin!=null and scenicname_pinyin!=''">
+			  		scenicname_pinyin =#{scenicname_pinyin},
+			   </if>
+			   <if test="address!=null and address!=''">
+			  		address =#{address},
+			   </if>
+			   <if test="introduce!=null and introduce!=''">
+			  		introduce =#{introduce},
+			   </if>
+			    <if test="province!=null and province!=''">
+			  		province =#{province},
+			   </if>
+			    <if test="city!=null and city!=''">
+			  		city =#{city},
+			   </if>
+			    <if test="floor_price!=null and floor_price!=''">
+			  		floor_price =#{floor_price},
+			   </if>
+			   <if test="coverImage!=null and coverImage!=''">
+			  		coverImage =#{coverImage},
+			   </if>
+			   <if test="title.id!=null and title.id!=''">
+			  		titleid =#{title.id},
+			   </if>
+			   <if test="headline!=null and headline!=''">
+			  		headline =#{headline},
+			   </if>
+			 </set>
+		   where id=#{id}
+	</update>
+	<select id="queryByScenic" resultMap="scenicMapper">
+		select * from scenic
+	</select>
+
+	<select id="queryByScenicWithNameOrCity" parameterType="Scenic"
+		resultMap="scenicMapper">
+		select * from scenic s
+		<where>
+			<if test="scenicname!=null">
+				and (scenicname like concat('%',#{scenicname},'%')
+				or
+				scenicname_pinyin like concat('%',#{scenicname},'%')
+				or city like
+				concat('%',#{scenicname},'%'))
+			</if>
+			<if test="title.id!=null">
+				and titleid=#{title.id}
+			</if>
+		</where>
+	</select>
+	<select id="queryByScenicAndName" parameterType="Scenic"
+		resultMap="scenicMapper">
+		select s.* from scenic s,scenicway_orscenic so,title t
+		<where>
+			and s.`id`=so.`scenId` and t.id=s.titleid
+			<if test="scenicname!=null">
+				and (scenicname like concat('%',#{scenicname},'%')
+				or
+				scenicname_pinyin like concat('%',#{scenicname},'%')
+				or city like
+				concat('%',#{scenicname},'%'))
+			</if>
+			<if test="title.type!=null and title.type!=''">
+				and t.type=#{title.type}
+			</if>
+			AND so.`wayId`>0
+		</where>
+		GROUP BY s.`id`
+	</select>
+	
+	<select id="queryAddress" resultMap="scenicMapper">
+		SELECT * FROM scenic WHERE id=#{arg0}
+	</select>
+	
+	<select id="queryCorrelation" parameterType="Map" resultMap="scenicMapper">
+		select * from scenic
+		<where>
+			<if test="city != null and city!=''">
+				city like concat('%',#{city},'%')
+			</if>
+			<if test="province!=null and province!=''">
+				or province like concat('%',#{province},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询好评景点以及相关信息-->
+	<select id="queryPraise" resultMap="scenicMapper" parameterType="Map"> 
+		SELECT sy.*,SUM(number)/(COUNT(0)*5)*100 praise,sy.id FROM remark rk 
+		INNER JOIN mark mk ON mk.id = rk.markid 
+		INNER JOIN indent it ON rk.indentid = it.id 
+		INNER JOIN indentdetails itds ON it.indentdetailsId = itds.id 
+		INNER JOIN scenic sy ON sy.id = itds.scenicId 
+		<where>
+			<if test="city != null and city!=''">
+				city like concat('%',#{city},'%')
+			</if>
+			<if test="province!=null and province!=''">
+				or province like concat('%',#{province},'%')
+			</if>
+		</where>
+		GROUP BY itds.scenicId 
+		ORDER BY praise DESC 
+	</select>
+	
+	<!-- 查询相关的景点 -->
+	<select id="queryCorrScenic" resultMap="scenicMapper" parameterType="Map">
+		select * from scenic 
+		<where>
+			<if test="city != null and city!=''">
+				(city like concat('%',#{city},'%')
+			</if>
+			<if test="province!=null and province!=''">
+				or province like concat('%',#{province},'%'))
+			</if>
+		</where>
+		and titleid=#{titleid}
+	</select>
+	
+	<!-- 按照id查询好评率 -->
+	<select id="queryPraiseScenic" resultType="map" parameterType="int"> 
+		SELECT SUM(number)/(COUNT(0)*5)*100 praise,sy.id scenicId FROM remark rk 
+		INNER JOIN mark mk ON mk.id = rk.markid 
+		INNER JOIN indent it ON rk.indentid = it.id 
+		INNER JOIN indentdetails itds ON it.indentdetailsId = itds.id 
+		INNER JOIN scenic sy ON sy.id = itds.scenicId 
+		WHERE sy.id=#{id}
+		GROUP BY itds.scenicId 
+		ORDER BY praise DESC 
+	</select>
+	<select id="queryScenicByContent" resultType="Scenic">
+		select * from scenic where scenicname like concat("%",#{param1},"%") limit 0,1
+	</select>
+</mapper>

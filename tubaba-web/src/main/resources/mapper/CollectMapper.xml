@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.CollectMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="com.znsd.tubaba.entity.Collect" id="collectMapper">
+	    <id property="id" column="id"/>
+	    <association property="user" fetchType="lazy" column="userId" select="com.znsd.tubaba.mapper.UserMapper.findById" />
+	    <association property="scenic" fetchType="lazy" column="scenicId" select="com.znsd.tubaba.mapper.ScenicMapper.queryScenicById" />
+	    <association property="scenicway" fetchType="lazy" column="scenicwayId" select="com.znsd.tubaba.mapper.ScenicwayMapper.queryById" />
+	    <!-- <association property="hotel" fetchType="lazy" column="hotelId" select="com.znsd.tubaba.mapper.HotelMapper.findById" /> -->
+ 	</resultMap>
+ 	
+ 	<!-- 查询用户的所有收藏-->
+ 	<select id="findByUserId" resultMap="collectMapper">
+ 		select * from collect where userId=#{param1}
+ 	</select>
+ 	<!-- 查询用户的所有收藏数量 -->
+ 	<select id="findByUserIdCount" resultType="int">
+ 		select count(1) from collect where userId=#{param1}
+ 	</select>
+ 	<!-- 查询用户的景点收藏 -->
+ 	<select id="findByUserIdAndScenicIdNotNull" resultMap="collectMapper">
+ 		select * from collect where userId=#{param1} and scenicId is not null and scenicId not in (SELECT scenicid FROM discounts WHERE scenicid IS NOT NULL)
+ 	</select>
+ 	<!-- 查询用户的景点收藏数量 -->
+ 	<select id="findByUserIdAndScenicIdNotNullCount" resultType="int">
+ 		select count(1) from collect where userId=#{param1} and scenicId is not null and scenicId not in (SELECT scenicid FROM discounts WHERE scenicid IS NOT NULL)
+ 	</select>
+ 	<!-- 查询用户所有路线收藏 -->
+ 	<select id="findByUserIdAndScenicwayIdNotNull" resultMap="collectMapper">
+ 		select * from collect where userId=#{param1} and scenicwayId is not null and scenicwayId not in (SELECT scenicwayid FROM discounts WHERE scenicwayid IS NOT NULL)
+ 	</select>
+ 	<!-- 查询用户所有路线收藏数量 -->
+ 	<select id="findByUserIdAndScenicwayIdNotNullCount" resultType="int">
+ 		select count(1) from collect where userId=#{param1} and scenicwayId is not null and scenicwayId not in (SELECT scenicwayid FROM discounts WHERE scenicwayid IS NOT NULL)
+ 	</select>
+ 	<!-- 查询用户所有酒店收藏 -->
+ 	<select id="findByUserIdAndHotelIdNotNull" resultMap="collectMapper">
+ 		select * from collect where userId=#{param1} and hotelId is not null and hotelId not in (SELECT hotelid FROM discounts WHERE hotelid IS NOT NULL)
+ 	</select>
+ 	<!-- 查询用户所有酒店收藏数量 -->
+ 	<select id="findByUserIdAndHotelIdNotNullCount" resultType="int">
+ 		select count(1) from collect where userId=#{param1} and hotelId is not null and hotelId not in (SELECT hotelid FROM discounts WHERE hotelid IS NOT NULL)
+ 	</select>
+ 	<!-- 查询用户所有的特卖收藏 -->
+ 	<select id="findByUserIdAndActivity" resultMap="collectMapper">
+ 		select * from collect where userId=#{param1} and 
+ 		((hotelId is not null and hotelId in (SELECT hotelid FROM discounts WHERE hotelid IS NOT NULL)) || 
+ 		(scenicwayId is not null and scenicwayId in (SELECT scenicwayid FROM discounts WHERE scenicwayid IS NOT NULL)) ||
+ 		(scenicId is not null and scenicId in (SELECT scenicid FROM discounts WHERE scenicid IS NOT NULL)))
+ 	</select>
+ 	<!-- 查询用户所有的特卖收藏数量 -->
+ 	<select id="findByUserIdAndActivityCount" resultType="int">
+ 		select count(1) from collect where userId=#{param1} and 
+ 		((hotelId is not null and hotelId in (SELECT hotelid FROM discounts WHERE hotelid IS NOT NULL)) || 
+ 		(scenicwayId is not null and scenicwayId in (SELECT scenicwayid FROM discounts WHERE scenicwayid IS NOT NULL)) ||
+ 		(scenicId is not null and scenicId in (SELECT scenicid FROM discounts WHERE scenicid IS NOT NULL)))
+ 	</select>
+ 	<!-- 通过用户编号和旅游路线编号或景点编号查询收藏信息 -->
+ 	<select id="queryCollectByUserIdAndScenicIdOrScenicwayId" resultMap="collectMapper">
+ 		SELECT * FROM collect
+ 		<where>
+ 			<if test="userId != null and userId != ''">
+ 				and userId = #{userId}
+ 			</if>
+ 			<if test="scenicId != null and scenicId != ''">
+ 				and scenicId = #{scenicId}
+ 			</if>
+ 			<if test="scenicwayId != null and scenicwayId != ''">
+ 				and scenicwayId = #{scenicwayId}
+ 			</if>
+ 		</where> 
+ 	</select>
+ 	<!-- 删除我的收藏 -->
+ 	<delete id="deleteByUserIdAndScenidId">
+ 		<!-- DELETE FROM collect WHERE userId = #{userId} AND (scenicId IN (${scenidId}) OR scenicwayId IN (${scenicwayId}) OR  hotelId IN (${hotelId})) -->
+ 		DELETE FROM collect
+ 		<where>
+ 			<if test="userId != null and userId != ''">
+ 				and userId = #{userId}
+ 			</if>
+ 			<if test="scenidId != null and scenidId != ''">
+ 				and scenicId = #{scenidId}
+ 			</if>
+ 			<if test="scenicwayId != null and scenicwayId != ''">
+ 				and scenicwayId = #{scenicwayId}
+ 			</if>
+ 		</where>
+ 	</delete>
+ 	<!-- 删除我的收藏 -->
+ 	<delete id="deleteByUserIdAndScenidId2">
+ 		DELETE FROM collect WHERE userId = #{userId} AND (scenicId IN (${scenidId}) OR scenicwayId IN (${scenicwayId}) OR  hotelId IN (${hotelId}))
+ 	</delete>
+ 	<!-- 用户收藏产品  -->
+ 	<insert id="insertCollect" keyProperty="id" useGeneratedKeys="true">
+ 		INSERT INTO collect(
+			userId,scenicId,scenicwayId
+ 		) VALUES(
+ 			#{user.id},#{scenic.id},#{scenicway.id}
+ 		)
+ 	</insert>
+</mapper>

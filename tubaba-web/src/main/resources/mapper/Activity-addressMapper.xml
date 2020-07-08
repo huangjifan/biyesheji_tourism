@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.ActivityAddressMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="com.znsd.tubaba.entity.Activity_address" id="actresultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="upid" column="upid"/>
+		<result property="state" column="state"/>
+	</resultMap>
+	<!-- 查询活动分类是否在活动表中是否有数据 -->
+	<select id="queryatredId" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM `activity_address` WHERE id IN(SELECT `addressid` FROM`activity` WHERE `addressid`=#{addressid})
+	</select>
+	
+	<!-- 查询所有的活动分类 -->
+	<select id="queryAddress" resultMap="actresultMap">
+		select * from activity_address where state = 0
+	</select>
+	
+	<!-- 按/名字查询分类 -->
+	<select id="queryOneAct" parameterType="String" resultType="Integer">
+		select count(*) from activity_address where name=#{name}
+	</select>
+	
+	<!-- 活动分类的增加 -->
+	<insert id="addAct" parameterType="com.znsd.tubaba.entity.Activity_address">
+		INSERT INTO activity_address(name,upid) VALUE(#{name},#{upid})
+	</insert>
+	
+	<!-- 删除活动分类（修改状态 0为正常 1为已删除） -->
+	<update id="deleteAct">
+		UPDATE `activity_address` SET `state`=#{arg0}  WHERE id=#{arg1}
+	</update>
+	
+	<!-- 根据id获取单个对象 -->
+	<select id="queryOneId"  parameterType="int" resultType="com.znsd.tubaba.entity.Activity_address">
+		select * from activity_address where id=#{id}
+	</select>
+	
+	<!-- 修改活动分类 -->
+	<update id="updateact" parameterType="com.znsd.tubaba.entity.Activity_address">
+		update activity_address set name=#{name},upid=#{upid} where id=#{id}
+	</update>
+</mapper>

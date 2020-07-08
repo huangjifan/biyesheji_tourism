@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.ScenicwayOrscenicMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="com.znsd.tubaba.entity.ScenicwayOrscenic" id="scenicwayOrscenicMap">
+		<id column="id" property="id" />
+		<result column="index" property="index" />
+		
+		<!-- 
+		<association property="scenicway" column="wayId" 
+			select="com.znsd.tubaba.mapper.ScenicwayMapper.queryById"/>
+		-->
+		<association property="scenic" column="scenId" 
+			select="com.znsd.tubaba.mapper.ScenicMapper.queryScenicById"/>
+	</resultMap>
+	
+	<!-- 通过旅游路线编号查询旅游路线景点记录 -->
+	<select id="queryScenicwayOrscenicByScenicwayId" resultMap="scenicwayOrscenicMap">
+		SELECT * FROM scenicway_orscenic 
+		WHERE wayId = #{scenicwayId}
+		group by wayId,`index`
+	</select>
+	<!-- 添加路线包含的景点 -->
+	<insert id="updScenicwayOrscenic" parameterType="com.znsd.tubaba.entity.ScenicwayOrscenic">
+		INSERT INTO `db_tubaba`.`scenicway_orscenic` (
+			`wayId`,
+			`scenId`,
+			`index`
+		)VALUES
+		  (
+		  	#{scenicway.id},
+		  	#{scenic.id},
+		    #{index}
+		  ) ;
+	</insert>
+	<!-- 根据景点路线id删除对应的数据 -->
+	<delete id="delScenicwayBywayId">
+		DELETE FROM `scenicway_orscenic` WHERE `wayId` = #{wayId}
+	</delete>
+</mapper>

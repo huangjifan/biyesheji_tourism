@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.CouponMapper">
+	<!-- 查询用户优惠卷 -->
+	<select id="findByUserId" resultType="com.znsd.tubaba.entity.Coupon">
+		select * from coupon where userId=#{userId}
+			and couponStatus = #{couponStatus}
+	</select>
+	
+	<update id="updateState" flushCache="true">
+		update coupon set couponStatus = #{couponStatus} where id = #{couponId}
+	</update>
+</mapper>

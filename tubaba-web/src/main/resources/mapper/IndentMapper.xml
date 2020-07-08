@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.IndentMapper">
+	<resultMap type="com.znsd.tubaba.entity.Indent" id="indentMapper">
+	    <id property="id" column="id"/>
+	    <result property="price" column="price"/>
+	    <result property="commodity" column="commodity"/>
+	    <result property="indentstatus" column="indentstatus"/>
+	    <result property="ordernumber" column="ordernumber"/>
+	    <result property="cancel" column="cancel" />
+	    <association property="linkMan" fetchType="lazy" column="linkmanid" select="com.znsd.tubaba.mapper.LinkManMapper.findByLinkManId" />
+ 		<association property="indentdetails" fetchType="lazy" column="indentdetailsId" select="com.znsd.tubaba.mapper.IndentdetailsMapper.findById" />
+ 		<association property="cost" fetchType="lazy" column="id" 
+ 		select="com.znsd.tubaba.mapper.CostMapper.findByIndentId" />
+ 		<!-- <collection property="playMan" fetchType="lazy" ofType="com.znsd.tubaba.entity.PlayMan" select="findByPlayManIndentId"  column="id" /> -->
+ 	</resultMap>
+ 	
+ 	<!-- 根据订单编号查询订单 -->
+ 	<select id="findByIndentId" resultMap="indentMapper">
+ 		select * from indent where id = #{id}
+ 	</select>
+ 	
+ 	<!-- 查询所有订单 -->
+ 	<select id="findByAll" resultMap="indentMapper">
+ 		select * from indent
+ 	</select>
+ 	
+ 	<!-- 根据类型查询订单 -->
+ 	<select id="findByType" resultMap="indentMapper">
+ 		SELECT i.* FROM indent i,indentdetails ii where i.indentdetailsId = ii.id and i.indentdetailsId in (select id from indentdetails where userid = #{userId})
+		<if test="type != 'all' and type != null">
+			 and i.indentdetailsId IN (SELECT id FROM indentdetails WHERE ${type} IS NOT NULL)
+ 		</if>
+ 		<if test="indentstatus != 'all' and indentstatus != null">
+ 			and i.indentstatus = #{indentstatus}
+ 		</if>
+ 		ORDER BY ii.orderstime  DESC
+ 	</select>
+ 	
+ 	<!-- 查询用户最近订单 -->
+ 	<select id="findByRecently" resultMap="indentMapper">
+ 		SELECT i.* FROM indent i,indentdetails ii WHERE i.indentdetailsId = ii.id AND ii.userid=#{userId} AND i.indentstatus != 7 ORDER BY orderstime DESC LIMIT 0,5
+ 	</select>
+ 	
+ 	<!-- 修改订单状态 -->
+ 	<update id="updateIndentstatus">
+ 		UPDATE `indent` SET `indentstatus` = #{indentstatus} 
+ 		<if test="cancel != null"> 
+ 			,cancel = #{cancel}
+ 		</if>
+ 		 where `id` = #{id}
+ 	</update>
+ 	
+ 	<!-- 通过订单id查询游玩人 -->
+ 	<!-- <select id="findByPlayManIndentId" resultType="com.znsd.tubaba.entity.PlayMan">
+ 		select * from playMan where indentId = #{indentId}
+ 	</select> -->
+ 	
+ 	<!-- 修改点评状态 -->
+ 	<update id="updatestatus">
+ 		UPDATE `indent` SET `indentstatus`=#{arg0} where id=#{arg1}
+ 	</update>
+ 	
+ 	<!-- 新增订单 -->
+ 	<insert id="addIndent" keyProperty="id" useGeneratedKeys="true">
+ 		INSERT INTO indent(price,linkmanid,commodity,indentstatus,indentdetailsId,ordernumber)
+ 		VALUES(#{price},#{linkMan.id},#{commodity},1,#{indentdetails.id},#{ordernumber});
+ 	</insert>
+ 	
+ 	<!-- 通过伪订单编号查询订单 -->
+ 	<select id="findByOrdernumber" resultMap="indentMapper">
+ 		SELECT * FROM indent where id = #{ordernumber}
+ 	</select>
+ 	
+ 	<!-- 通过用户编号和旅游路线编号查询待评论订单 -->
+ 	<select id="findByUserIdAndScenicwayId" resultMap="indentMapper">
+ 		SELECT * FROM indent it 
+		INNER JOIN indentdetails itds
+		ON it.indentdetailsId = itds.id
+		WHERE it.indentstatus IN(0,5)
+		AND itds.userid = #{userId}
+		AND itds.scenicwayId = #{scenicwayId}
+ 	</select>
+</mapper>

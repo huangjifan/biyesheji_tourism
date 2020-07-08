@@ -1,0 +1,187 @@
+@charset "utf-8";
+/* CSS Document */
+.wa_crumbs{ padding:6px 0 12px; color:#999}
+.wa_crumbs a{ color:#666}
+.wa_crumbs a:hover{ color:#f60}
+.wa_warp{ background:#F7F7F7; overflow:hidden; margin-top: 40px; }
+.wa_main{ width:1200px; margin:0 auto; }
+.wa_Wmain{ width:1160px; margin:0 auto; }
+.wa_leftside{ width:940px;background:#fff;}
+.wa_rightside{ width:240px;background:#fff;}
+.wa_content{ border:1px solid #E7E7E7}
+.wa_gcontent{border:1px solid #E7E7E7; background:#fff; margin-bottom:30px; padding:20px;}
+.wa_leftside .wa_content{ padding:20px 20px 0;}
+.wa_rightside .wa_content{ padding:20px 0 0;}
+
+.wa_title{ border-bottom:1px solid #ddd; padding-bottom:10px;}
+.wa_title .wa_name{ color:#333; font-size:22px;  font-weight:normal;}
+.wa_title .wa_name span{ color:#999; font-size:12px; margin-left:18px;}
+.wa_title .tab{ margin: 2px 0 0;}
+.wa_title .tab li{ float:left; font-size:16px; color:#666; width:58px; text-align:center; height:22px; line-height:24px;  margin-left:2px;}
+.wa_title .tab li:hover,.wa_title .tab .active{ background:#f90; color: #fff; border-radius:16px; cursor:pointer;}
+.user_list{ margin:20px 0 0 -30px; display:none;}
+.user_list li{ width:200px; float:left; margin:0 0 40px 30px;}
+.user_head{ display:block;overflow:hidden; padding-left: 4px; }
+.user_head img{ display:block;border-radius:50%;}
+.user_bd{ margin-left:56px; color:#999; font-size:12px}
+.user_bd p{font-size:14px; margin:2px 0; height:16px; line-height:16px; overflow:hidden}
+.user_bd p a{color:#333;}
+.user_bd p a:hover{ color:#f60}
+
+.wa_light_content{ width:460px; margin-left:40px;} 
+.wa_trive{position:relative; margin-bottom:19px;}
+.wa_trive h4{ font-size:16px; color:#333; margin-bottom:4px;}
+.wa_trive .wa_Wligh{ font-size:14px; line-height:22px;}
+.wa_trive .wa_Wtips{ font-size:12px; color:#999;}
+.wa_trive .wa_Wligh a{ color: #333; }
+.wa_trive .wa_Wtips a{ color: #999; }
+.wa_trive .wa_Wligh a:hover, .wa_trive .wa_Wtips a:hover{ color: #ff6600; }
+
+.wa_Rname{color:#333; text-align:center; font-size:18px; font-weight:normal;}
+.perk_list{ margin:0 0 0 12px;}
+.perk_list li{ margin:25px 0 0;}
+.wa_icon{ background:url(http://pic.lvmama.com/img/you/p_icon.png) no-repeat; display:inline-block; width:36px; height:36px;}
+.perk_list .one{ background-position:0 -1px}
+.perk_list .two{ background-position:-36px -1px}
+.perk_list .three{ background-position:-73px -1px}
+.perk_list .four{ background-position:-110px -1px}
+.perk_list .five{ background-position:-147px -1px}
+.perk_list .six{ background-position:-184px -1px}
+
+.perk_content{ margin-left:42px; color:#999}
+.perk_content p{ color:#666;font-size:14px; margin:2px 0 0; line-height:16px; overflow:hidden}
+.btn_box{ background:#f8f8f8; padding:25px; text-align:center; margin:20px 0 0;}
+.btn_box .btn{ display:block; border-radius:3px; width:194px;  background:#f80; height:30px; line-height:30px; color:#fff; text-align:center; font-size:14px;}
+.btn_box .btn:hover{ background:#f60; text-decoration:none;}
+.w220{ width:220px;}
+/*鍒嗛〉*/
+.profilePages{ text-align:right; padding-bottom:20px;}
+.profilePages a{ font-size:12px; color:#666666; width:auto; height:24px; line-height:24px; border:1px solid #ddd; text-align:center; margin:0px 3px; padding:0px 10px; display:inline-block; background:#fff; }
+.profilePages a.active{ background:#FF8800; border:1px solid #FF8800; color:#ffffff; text-decoration:none;}
+.profilePages a:hover{ border:1px solid #FF6600; /*background:#ffffff; color:#666666;*/ text-decoration:none;}
+.profilePages a.prev{ width:68px; height:24px; padding:0px; position:relative; top:-2px;border:1px solid #ddd; vertical-align:middle; }
+.profilePages a.prev:hover{ background-position:0px -141px; border:1px solid #FF6600;}
+.profilePages a.next{ width:68px; height:24px; padding:0px;  position:relative; top:-2px;border:1px solid #ddd; vertical-align:middle; }
+.profilePages a.next:hover{ background-position:-30px -141px; border:1px solid #FF6600;}
+
+/*banner*/
+.wa_banner{ height:367px; overflow:hidden; margin:0 0 30px 0; }
+.wa_banner .warp{ width:1200px; height:367px; margin:0 auto;position:relative; overflow:hidden}
+.wa_banner .wa_wirte{ position:absolute; color:#fff; bottom:10px; right:10px;}
+.wa_banner .content{ width:480px; height:247px; color:#fff; background:#000; margin:50px auto 0;background: rgba(0, 0, 0, 0.6);filter: progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#99000000', endColorstr='#99000000'); overflow:hidden; padding:0 20px;}
+.wa_banner .title{ font-size:36px;font-weight:normal; text-align:center; margin:20px 0 0;}
+.wa_banner .ptitle{font-size:18px; text-align:center; margin:14px 0 0;}
+.wa_banner .pcontent{ font-size:14px; line-height:20px; margin:10px 0 0; padding-bottom:12px; border-bottom:1px dashed #fff;}
+.wa_banner .m_box{ margin:12px 0 0;}
+.wa_banner .m_icon{ width:16px; height:22px; background-position:-223px -8px; margin-right:7px; vertical-align:middle}
+.wa_banner .m_title{ font-size:16px}
+.wa_banner .m_bd{ margin:6px 0 0; font-size:14px}
+.wa_banner .m_bd a{ margin-right:16px; color:#fff}
+.wa_banner .m_bd a:hover{ color:#f80}
+
+.wa_imgbox{ overflow:hidden; width:498px; height:440px;position:relative}
+.wa_imgbox img{ display:block;}
+.wa_imgbox li{ position:absolute;}
+
+.wa_two .bigimg{left:0; top:0}
+.wa_two .smallimg{ left:0; bottom:0;}
+.wa_two .smallTimg{ left:306px; bottom:0;}
+
+.wa_three .bigimg{left:0; top:0}
+.wa_three .smallimg{ left:306px; top:0;}
+.wa_three .smallTimg{ left:306px; bottom:0;}
+
+.wa_Wcontent{ margin:0 0 0 20px; width:600px;}
+.wa_Wtitle{ font-size:22px;  margin-bottom:10px; font-weight:normal;overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:600px;}
+.wa_Wtitle a{color:#333;}
+.wa_Wtitle a:hover{ color:#f60}
+.wa_Wntoe{ margin:10px 0 0; color:#999}
+.wa_Wntoe span{ margin:0 5px}
+.wa_Wntoe .price{ color:#f60}
+.wa_lightbox{ margin:16px 0 0;}
+.wa_Wimgbox{ margin:60px 0 0; width:80px;}
+.wauser_bd{ line-height:18px; margin:10px 0 0; text-align: center;}
+.wauser_bd a{color:#666;}
+.wauser_bd a:hover{ color:#f60}
+
+.wa_loding,.bigimg,.smallimg,.smallTimg{background: url(http://pic.lvmama.com/img/new_v/ui_scrollLoading/loading.gif) no-repeat center center;}
+.wa_loding{height:104px;}
+.wa_recommendbox{height:104px;background:#F8F8F8; padding:0 14px; overflow:hidden;}
+.wa_recommendbox .title{ margin-top:12px;}
+.wa_recommendbox .wa_more{ font-size:12px; color:#999} 
+.wa_recommendbox .wa_more:hover{ color:#f60}
+.wa_recommendbox .title h4{color:#333; font-size:16px;}
+.wa_productbox{ margin:10px 0 0;}
+.wa_productbox .price{ color:#f60;  font-size:20px;}
+.wa_productbox .price em{ font-size:14px}
+.wa_productbox p{ font-size:14px; margin-bottom:6px;}
+.wa_productbox p a{color:#666;}
+.wa_productbox p a:hover{ color:#f60}
+.wa_producticon{ display:inline-block; padding:0 5px; height:17px; line-height:17px; background:#f80; color:#fff; text-align:center; border-radius:2px; margin-right:5px}
+
+.wa_left_icon,.wa_right_icon{ width:16px; height:16px;  position:absolute; }
+.wa_left_icon{background-position:-244px -8px; top:30px;left: -26px;}
+.wa_right_icon{background-position:-265px -8px;bottom: 0px;right: -20px;}
+.wa_conmbox{ overflow:hidden; margin-bottom:30px;}
+.wa_conmbox .title{ color:#333; font-size:24px; font-weight:normal; margin-bottom:10px;}
+.htitle_box{ height:40px; background:#FBFBFB; line-height:40px;}
+.htitle_box .jion_btn{ display:inline-block;width:79px; height:22px; line-height:22px; color:#fff; background:#f80; text-align:center; margin-right:10px; border-radius:2px;}
+.htitle_box .jion_btn:hover{ background:#f60; text-decoration:none}
+.htitle_box span{ margin-right:18px;}
+.htitle_box h4{ font-size:16px; color:#666;font-weight:normal; padding-left:10px; }
+.htitle_box h4 em{ font-size:12px; }
+.htitle_box h4 i{ width:16px; height:18px; background-position:-283px -9px; margin-right:8px; vertical-align:middle;}
+
+.wa_hotbox{ margin:10px 0 0 -20px;}
+.wa_hotbox li{ float:left; width:275px; margin-left:20px; position:relative;}
+.wa_hotcontent{ height:38px; line-height:38px; padding:0 16px; background:#fff; border:1px solid #ddd; border-top:none;font-size:16px;overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:241px;}
+.wa_hotcontent a{ color:#333}
+.wa_hotcontent a:hover{ color:#f80}
+.wa_hotbox li .mdbox{ display:none;background: rgba(0, 0, 0, 0.6);filter: progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#99000000', endColorstr='#99000000'); width:275px; height:183px; position:absolute; top:0; left:0;}
+.wa_hotbox li:hover .mdbox{ display:block;}
+.wa_hotbox .note_box{ padding:16px; color:#fff;}
+.wa_hotbox .note_box p{ line-height:20px;height: 60px;overflow: hidden;}
+.wa_hotbox .hd_box{ margin:10px 0 3px 0;}
+.wa_hotbox .hd_box i{ width:14px; height:18px; background-position:-303px -8px; margin-right:4px; vertical-align:middle}
+.wa_hotbox .note_box a{ color:#fff; margin-right:15px; display:inline-block; line-height:18px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.wa_hotbox .note_box a:hover{ color:#f80}
+.viewmore{ font-size:12px; color:#999; }
+/* Hot and Talent End */
+/* Cities Start */
+.e-cities-wrap { background: #FFFFFF; }
+
+.e-cities { width: 1200px; margin: 0 auto; padding-bottom: 20px; }
+
+.e-c-title {font-size: 16px; color: #333333; height: 25px; line-height: 25px; padding: 17px 0 3px 0; overflow: hidden; }
+
+.e-c-content { line-height: 20px; }
+
+.e-c-content a { float: left; color: #999999; margin-right: 10px; white-space: nowrap; }
+
+.e-c-content a:hover { color: #FF6600; }
+
+/* Cities End */
+/* Footer Start */
+.icon { width: 25px; height: 25px; display: inline-block; vertical-align: middle; background: url(http://pic.lvmama.com/img/you/icon_bg.png) no-repeat; }
+
+.footer { width: 100%; height: 148px; border: 1px solid #F0F0F0; border-right: 0px; border-left: 0px; background: #FAFAFA; padding-top: 3px; }
+
+.footer_line { width: 100%; height: 2px; background: #F6F6F6; }
+
+.footer_main { width: 1200px; margin: 0 auto; padding-top: 28px; overflow: hidden; }
+
+.footer_main ul { float: left; width: 144px; margin-right: 45px; border-right: 1px dashed #dddddd; }
+
+.footer_main ul li h5 { font-size: 16px; margin-bottom: 5px; color: #333333; font-weight: normal; }
+
+.footer_main ul li h5 span { padding: 0 5px;font-size: 12px; color: #666666; }
+
+.footer_main ul li a { font-size: 12px; color: #666666; }
+
+.footer_main ul li a:hover { color: #ff6600; }
+
+.icon_webo { background-position: -100px -75px; }
+
+.icon_tencent { background-position: -125px -75px; }
+
+/*Footer End*/

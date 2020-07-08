@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.TitleMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+
+	<resultMap type="com.znsd.tubaba.entity.Title" id="titleMapper">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+	</resultMap>
+	
+	<resultMap type="com.znsd.tubaba.entity.Title" id="titleMapperTwo">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+		<collection property="scenSet" column="id" select ="com.znsd.tubaba.mapper.ScenicMapper.queryOne"></collection>
+	</resultMap>
+	
+	<!-- 查询所有主题信息 -->
+	<select id="queryTitleAll" resultMap="titleMapper">
+		select * from title
+	</select>
+	<!-- 根据id查询主题信息 -->
+	<select id="queryTitleById" resultMap="titleMapper">
+		select * from title where
+		id = #{id}
+	</select>
+	<!-- 查询产品分类的热门主题 -->
+	<select id="queryHotTitleByAttractionsId" resultMap="titleMapper">
+		SELECT tl.*
+		FROM indentdetails itds
+		INNER JOIN scenicway sy ON itds.scenicwayId =
+		sy.id
+		INNER JOIN title tl ON tl.id = sy.titleid
+		WHERE sy.attractionsId
+		IN (SELECT
+		atid FROM attractions WHERE #{attractionsId} IN(atid,apid))
+		GROUP BY
+		tl.id
+		ORDER BY COUNT(0)
+	</select>
+	<!-- 通过主题分类搜索主题信息 -->
+	<select id="queryTitleByType" resultMap="titleMapper">
+		SELECT * FROM title
+		WHERE type LIKE CONCAT('%',#{type},'%')
+	</select>
+	<select id="findByTitle" resultMap="titleMapper">
+		select t.* from scenicway
+		sw,title t,indentdetails i,attractions a
+		where a.atid=sw.attractionsId
+		and sw.`titleid`=t.id AND
+		sw.`id`=i.`scenicwayId`
+		<if test="attractions!=null and attractions!=''">
+			and a.atrtitle=#{param1}
+		</if>
+		GROUP BY
+		i.`scenicwayId` order by count(*) desc;
+	</select>
+	<select id="queryByThemeWithIndentdetails" resultMap="titleMapper">  
+		select t.*
+		from title t,scenic s,indentdetails i where t.id=s.titleid and
+		i.scenicid=s.id group by s.`titleid` order by count(*) desc;
+	</select>
+	<select id="queryByScenicByName" resultMap="titleMapper">
+		select t.*
+		from
+		scenicway_orscenic so,scenicway sw,title t
+		,scenic sc
+		where
+		so.`wayId`=sw.`id`
+		AND so.`scenId`=sc.`id` and t.id=sw.titleid
+		<if test="attractionsId!=null">
+			and
+			sw.attractionsId=#{param3}
+		</if>
+		<if test="content!=null and content!=''">
+			and
+			(sc.scenicname like concat("%",#{param1},"%")
+			or
+			sc.city
+			like concat("%",#{param1},"%")
+			or
+			sc.scenicname_pinyin like
+			concat("%",#{param1},"%"))
+		</if>
+		<if test="toPath!=null and toPath!=''">
+			and
+			sw.startpath like concat('%',#{param2},'%')
+		</if>
+		GROUP BY sw.`titleid` ORDER BY COUNT(0) DESC
+	</select>
+	<select id="queryByScenicAndName" parameterType="Scenic" resultMap="titleMapper">
+			select t.* from scenic s,title t 
+		<where>
+			and t.id=s.titleid
+			<if test="scenicname!=null">
+				and (scenicname like concat('%',#{scenicname},'%')
+				or
+				scenicname_pinyin like concat('%',#{scenicname},'%')
+				or city like concat('%',#{scenicname},'%'))
+			</if>
+		</where>
+		GROUP BY s.`titleid` ORDER BY COUNT(0) DESC;
+	</select>
+</mapper>

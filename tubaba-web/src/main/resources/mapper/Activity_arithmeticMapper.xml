@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.Activity_arithmeticMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="com.znsd.tubaba.entity.Activity_arithmetic" id="activity_arithmeticMap">
+		<id property="id" column="id"/>
+		<result property="arithmeticType" column="arithmeticType"/>
+		<result property="discountsMoney" column="discountsMoney"/>
+		<result property="discount" column="discount"/>
+		<result property="satisfyMoney" column="satisfyMoney"/>
+		<result property="maxDiscountsMoney" column="maxDiscountsMoney"/>
+		<!-- <result property="arithmeticid" column="arithmeticid"/>	 -->	
+	</resultMap>
+	
+	
+	<select id="queryArith" resultMap="activity_arithmeticMap">
+		 select * from activity_arithmetic
+	</select>
+	
+	<select id="queryById" resultMap="activity_arithmeticMap">
+		 select * from activity_arithmetic where id = #{id}
+	</select>
+	
+	<insert id="addArith" parameterType="com.znsd.tubaba.entity.Activity_arithmetic">
+		insert into activity_arithmetic(
+			arithmeticType,
+			discountsMoney,
+			discount,
+			satisfyMoney,
+			maxDiscountsMoney
+		)values(
+			#{arithmeticType},
+			#{discountsMoney},
+			#{discount},
+			#{satisfyMoney},
+			#{maxDiscountsMoney}
+		)
+	</insert>
+
+	
+</mapper>

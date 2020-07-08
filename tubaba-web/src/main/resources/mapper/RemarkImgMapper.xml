@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.RemarkImgMapper">
+	<resultMap type="com.znsd.tubaba.entity.Remarkimg" id="remarkimgRestulMap">
+		<id property="id" column="id"/>
+		<result property="path" column="path"/>
+	</resultMap>
+	
+	<!--  * 增加评论图片
+	 * path 图片路径  
+	 * remarkId 评论表id
+	 * 返回被影响的行数 -->
+	<insert id="addRemarkImg">
+		insert into remarkimg(path,remarkid) value(#{arg0},#{arg1})
+	</insert>
+	
+	<select id="queryByMarkId" resultMap="remarkimgRestulMap">
+		select * from remarkimg where remarkid =#{arg0}
+	</select>
+</mapper>

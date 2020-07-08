@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.UserMapper">
+	<resultMap type="com.znsd.tubaba.entity.User" id="userMapper">
+	    <id property="id" column="id"/>
+	    <result property="username" column="username"/>
+	    <result property="userpass" column="userpass"/>
+	    <result property="realname" column="realname"/>
+	    <result property="iphone" column="iphone"/>
+	    <result property="email" column="email"/>
+	    <result property="headportrait" column="headportrait"/>
+	    <result property="marriage" column="marriage"/>
+	    <result property="birthday" column="birthday"/>
+	    <result property="sex" column="sex"/>
+	    <result property="money" column="money"/>
+	    <result property="integral" column="integral"/>
+	    <result property="logoutWhy" column="logoutWhy" />
+	    <result property="paymentCode" column="paymentCode" />
+	    <result property="emailCode" column="emailCode" />
+	    <result property="disposable" column="disposable"/>
+ 	</resultMap>
+	<select id="findById" resultMap="userMapper">
+		select * from user where id=#{id}
+	</select>
+	<!-- 判断手机号是否存在 -->
+	<select id="findByIphone" resultMap="userMapper">
+		select * from `user` where iphone=#{param1}
+	</select>
+	<!-- 修改用户手机 -->
+	<update id="updateUserIphone">
+		update `user` set iphone=#{iphone} where id=#{userId}
+	</update>
+	<!-- 修改用户密码 -->
+	<update id="updateUserPass">
+		update `user` set userpass=#{userpass} where id=#{userId}
+	</update>
+	<!-- 判断密码是否正确 -->
+	<select	id="checkUserPass" resultType="int">
+		select count(1) from user where id=#{userId} and userpass=#{userpass}
+	</select>
+	<!-- 判断邮箱是否存在 -->
+	<select id="findByEmail" resultMap="userMapper">
+		select * from user where email=#{param1}
+	</select>
+	<!-- 修改用户邮箱 -->
+	<update id="updateUserEmail">
+		update `user` set email=#{email} where id=#{userId}
+	</update>
+	<!-- 增加用户 -->
+	<insert id="addUser" parameterType="com.znsd.tubaba.entity.User" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `user` (
+		  `username`,
+		  `userpass`,
+		  `realname`,
+		  `iphone`,
+		  `email`,
+		  `headportrait`,
+		  `marriage`,
+		  `jobId`,
+		  `birthday`,
+		  `sex`,
+		  `addressId`
+		) 
+		VALUES
+		  (
+		    #{username},
+		    #{userpass},
+		    #{realname},
+		    #{iphone},
+		    #{email},
+		    #{headportrait},
+		    #{marriage},
+		    #{job.id},
+		    #{birthday},
+		    #{sex},
+		    #{address.id}
+		  ) ;
+	</insert>
+	<!-- 增加用户详情 -->
+	<insert id="addUserstatus" parameterType="com.znsd.tubaba.entity.UserStatus">
+		INSERT INTO `userstatus` (
+		  `status`,
+		  `loginnumber`,
+		  `resettime`,
+		  `registertime`,
+		  `lastlogintime`,
+		  `userid`,
+		  `lastLoginDate`,
+		  `thisLoginDate`,
+		  `hair`
+		) 
+		VALUES
+		  (
+		    #{status},
+		    0,
+		    #{resettime},
+		    #{registertime},
+		    #{lastlogintime},
+		    #{user.id},
+		    #{lastLoginDate},
+		    #{thisLoginDate},
+		    #{hair}
+		  ) ;
+	</insert>
+	<!-- 通过用户id查询用户详情表 -->
+	<select id="findByUserid" resultType="com.znsd.tubaba.entity.UserStatus">
+		select * from userstatus where userid=#{userId}
+	</select>
+	<!-- 修改用户详情表中的登陆时间 -->
+	<update id="updateUserstatusLoginTime">
+		UPDATE 
+		  `userstatus` 
+		SET
+		  `lastLoginDate` = `thisLoginDate`,
+		  `thisLoginDate` = NOW() ,
+		  `loginnumber` = `loginnumber` + 1
+		WHERE userid=#{userId}
+	</update>
+	<!-- 修改用户头像 -->
+	<update id="updateUserstatusHair">
+		UPDATE 
+		  `userstatus` 
+		SET
+		  `hair` = #{hair}
+		WHERE userid=#{userId}
+	</update>
+	<!-- 用户普通登录 -->
+	<select id="userLoginPost" resultMap="userMapper">
+		select * from user where username=#{param1} and userpass=#{param2} or iphone=#{param1} and userpass=#{param2} or email=#{param1} and userpass=#{param2}
+	</select>
+	
+	<!-- 查询所有用户 -->
+	<select id="queryUserAll" resultMap="userMapper">
+		select * from user
+	</select>
+	
+	<!-- 查询用户数量 -->
+	<select id="countUser" resultType="Integer">
+		select count(*) from user where type = 0
+	</select>
+	
+	<!-- 根据手机修改密码 -->
+	<update id="inPhoneUpdatePass">
+		update `user` set userpass = #{param2} where iphone = #{param1}
+	</update>
+	
+	<!-- 根据邮箱修改密码 -->
+	<update id="inEmailUpdatePass">
+		update `user` set userpass = #{param2} where email = #{param1}
+	</update>
+	
+	<!-- 判断用户支付密码是否正确 -->
+	<select id="checkUserPaymentCode" resultType="int">
+		select count(1) from `user` where paymentCode=#{paymentCode} and id=#{id}
+	</select>
+	
+	
+	<!-- 删除用户 -->
+	<update id="deleteUser">
+		UPDATE `user` SET `type`=#{arg0}
+		<if test="arg2 != null and arg2 != ''">
+			,logoutWhy=#{arg2}
+		</if>
+		WHERE id=#{arg1}
+	</update> 
+	
+	<!-- 管理员重置用户密码 -->
+		<update id="updateUser" >
+			UPDATE `user` SET `userpass`=#{arg0} WHERE id=#{arg1}
+		</update>
+		
+		
+	
+	<!-- 模糊查询 -->
+	<select id="queryUserCondition"  parameterType="Map" resultMap="userMapper">
+		select * from user
+		<where>
+			<if test="strattime!=null and strattime!=''">
+				and birthday &gt;= #{strattime}  
+			</if>
+			<if test="endtime!=null and endtime!=''">
+				and birthday &lt;= #{endtime}  
+			</if>
+			<if test="username!=null and username!=''">
+				or username like concat('%',#{username},'%')
+			</if>
+			 <if test="iphone!=null and iphone!=''">
+				or iphone like concat('%',#{iphone},'%')
+			</if>
+			<if test="email!=null and email!=''">
+				or email like concat('%',#{email},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据用户名查询用户对象 -->
+	<select id="queryOneByName" parameterType="String" resultType="com.znsd.tubaba.entity.User">
+		select * from user where username=#{username}
+	</select>
+	<!-- 修改用户支付密码 -->
+	<update id="updateUserPaymentCode">
+		UPDATE 
+		  `user` 
+		SET
+		  `paymentCode` = #{paymentCode} 
+		WHERE `id` = #{id} ;
+	</update>
+	
+	<!-- 查询用户支付密码 -->
+	<select id="findByUserPaymentCode" resultType="int">
+		SELECT paymentCode FROM `user` WHERE id = #{id};
+	</select>
+	
+	<!-- 修改用户账户金额 -->
+	<update id="updateUserMoney">
+		UPDATE 
+		  `user`
+		<set>
+			<if test="status == 1">
+				`money` = `money` + #{money}
+			</if>
+			<if test="status == 2">
+				`money` = `money` + #{money}
+			</if>
+			<if test="status == 3">
+				`money` = `money` - #{money}
+			</if>
+			<if test="status == 0">
+				`money` = `money` - #{money}
+			</if>
+		</set>
+		WHERE `id` = #{id} ;
+	</update>
+	<!-- 修改用户邮箱找回密码状态码 -->
+	<update id="updateUserEmailCode">
+		UPDATE `user` SET emailCode = #{emailCode} WHERE email=#{email}
+	</update>
+	<!-- 查询是否修改过用户名 -->
+	<select id="editNameExit" resultType="int" parameterType="int">
+		select disposable from user where id=#{id}
+	</select>
+	<!-- 修改用户名 -->
+	<update id="editUserName">
+		update user set username=#{param1},disposable=1 where id=#{param2}
+	</update>
+	<!-- 查询用户名是否存在 -->
+	<select id="userNameExit" resultType="String">
+		select username from user where username=#{param1}
+	</select>
+	<!-- 修改用户信息 -->
+	<update id="editUser" parameterType="com.znsd.tubaba.entity.User">
+		update user set realname=#{realname},sex=#{sex},birthday=#{birthday},addressId=#{address.id},jobId=#{job.id},marriage=#{marriage} where id=#{id}
+	</update>
+	<!-- 任务调度器,查询所有用户id -->
+	<select id="allUserId" resultMap="userMapper">
+		select * from `user`
+	</select>
+	<insert id="giveCoupon">
+		insert into coupon (userId,couponMoney,couponStatus,startTime,endTime) values
+		<foreach collection="list" item="id" separator=",">
+			(#{id},10,0,now(),#{param2})
+		</foreach>
+	</insert>
+	
+	<!-- 修改用户账户金额 -->
+	<update id="updateMoney">
+		UPDATE 
+		  `user`
+			set
+				`money` = `money` + #{param1}
+			
+		WHERE `id` = #{param2} ;
+	</update>
+	
+	<!-- 增加用户成长值 -->
+	<update id="addUserIntegral">
+		update user set integral = integral + #{integral} where id = #{userId}
+	</update>
+</mapper>

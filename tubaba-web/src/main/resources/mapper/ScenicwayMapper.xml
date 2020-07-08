@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.ScenicwayMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+
+	<resultMap type="com.znsd.tubaba.entity.Scenicway" id="scenicwayMap">
+		<id column="id" property="id" />
+		<result column="way" property="way" />
+		<result column="way_pinyin" property="way_pinyin" />
+		<result column="scenicday" property="scenicday" />
+		<result column="endpath" property="endpath" />
+		<result column="startpath" property="startpath" />
+		<result column="status" property="status" />
+		<result column="floor_price" property="floor_price" />
+		<result column="scenicwayImage" property="scenicwayImage" />
+		<result column="introduce" property="introduce" />
+		<result column="minimumGroupSize" property="minimumGroupSize" />
+		<!-- 一对一映射主题分类信息 -->
+		<association property="title" column="titleid"
+			select="com.znsd.tubaba.mapper.TitleMapper.queryTitleById"
+			fetchType="lazy">
+		</association>
+		<!-- 一对一映射产品分类信息 -->
+		<association property="attractions" column="attractionsId"
+			select="com.znsd.tubaba.mapper.AttractionsMapper.queryOneId"
+			fetchType="lazy">
+		</association>
+		<!-- 多对一景点路线图片信息 -->
+		<collection property="scenicimages" column="id"
+			select="com.znsd.tubaba.mapper.ScenicimageMapper.queryScenicimageByScenicwayId" />
+		<!-- 多对一旅游路线景点记录信息 -->
+		<collection property="scenicwayOrscenics" column="id"
+			select="com.znsd.tubaba.mapper.ScenicwayOrscenicMapper.queryScenicwayOrscenicByScenicwayId" />
+		<!-- 多对一活动记录信息 -->
+		<!-- <collection property="discounts" column="{scenicwayId=id}"
+			select="com.znsd.tubaba.mapper.DiscountsMapper.queryDiscountsByScenicwayIdOrScenicId" />  -->
+	</resultMap>
+	<resultMap type="com.znsd.tubaba.entity.Scenicway" id="scenicwayImageMap">
+		<id column="id" property="id" />
+		<result column="way" property="way" />
+		<result column="way_pinyin" property="way_pinyin" />
+		<result column="scenicday" property="scenicday" />
+		<result column="endpath" property="endpath" />
+		<result column="startpath" property="startpath" />
+		<result column="status" property="status" />
+		<result property="floor_price" column="floor_price" />
+		<result column="feedback" property="feedback" />
+		<result column="scenicwayImage" property="scenicwayImage" />
+		<result column="minimumGroupSize" property="minimumGroupSize" />
+		<collection property="discounts" column="id" select="com.znsd.tubaba.mapper.DiscountsMapper.queryDiscountsByScenicwayIdOrScenicId"></collection>	
+	     <!-- 多对一景点路线图片信息 -->
+	    <collection property="scenicimages" 
+			column="id" select="com.znsd.tubaba.mapper.ScenicimageMapper.queryScenicimageByScenicwayId" />
+	</resultMap>
+	<select id="queryByScenwayImage" resultType="Map">
+		select * from scenicway;
+	</select>
+	
+	
+		<select id="queryById" resultMap="scenicwayMap">
+		SELECT
+		sy.*,IFNULL(SUM(mk.number)/(COUNT(0)*5)*100,0) feedback
+		FROM scenicway
+		sy
+		LEFT JOIN indentdetails itds ON itds.scenicwayId = sy.id
+		LEFT JOIN
+		indent it ON it.indentdetailsId = itds.id
+		LEFT JOIN remark rk ON
+		rk.indentid = it.id
+		LEFT JOIN mark mk ON mk.id = rk.markid
+		WHERE
+		sy.id=#{id}
+		GROUP BY
+		sy.id
+	</select>
+	<!-- 根据路线id查询  -->
+	<select id="queryScenicwayById" resultMap="scenicwayMap">
+		select * from `scenicway` where id = #{id}
+	</select>
+	<select id="queryCount" parameterType="Integer" resultType="Integer">
+		select count(*) from scenicway where attractionsId=#{attractionsId}
+	</select>
+	<select id="findByScenicsAndStartpath" resultMap="scenicwayMap">
+		select sw.*,IFNULL(SUM(m.number)/(COUNT(0)*5)*100,0) feedback
+		from
+		scenicway_orscenic so,scenicway sw
+		,scenic sc ,indentdetails it,remark r,mark
+		m,indent i where
+		so.`wayId`=sw.`id`
+		AND so.`scenId`=sc.`id` and it.`id`=i.`indentdetailsId` and
+		i.`id`=r.`indentid` and
+		r.`markid`=m.`id`
+		<if test="attractionsId!=null">
+			and
+			sw.attractionsId=#{param3}
+		</if>
+		<if test="content!=null and content!=''">
+			and
+			(sc.scenicname like concat("%",#{param1},"%")
+			or
+			sc.city
+			like concat("%",#{param1},"%")
+			or
+			sc.scenicname_pinyin like
+			concat("%",#{param1},"%"))
+		</if>
+		<if test="toPath!=null and toPath!=''">
+			and
+			sw.startpath like concat('%',#{param2},'%')
+		</if>
+	</select>
+	<select id="findByScenics" resultMap="scenicwayMap">
+		select sw.* from
+		scenicway_orscenic so,scenicway sw,scenic sc
+		where so.`wayId`=sw.`id`
+		AND so.`scenId`=sc.`id` AND
+		sw.attractionsId=#{param2} AND
+		sc.scenicname=#{param1}
+		AND sw.startpath=(select city from scenic where
+		scenicname=#{param1});
+	</select>
+	<select id="findByActivityAndFrompathDesc" resultMap="scenicwayMap">
+		select sw.*
+		from
+		activity
+		a,discounts d,scenicway sw,indentdetails
+		i,activity_type at
+		where
+		a.id=d.activityid and d.scenicwayid=sw.`id` and
+		sw.`id`=i.`scenicwayId` and at.id=a.typeid
+		<if test="activityName!=null and activityName!=''">
+			and at.name=#{param1}
+		</if>
+		<if test="frompath!=null and frompath!=''">
+			and sw.`endpath`=#{param2}
+		</if>
+		group by i.`scenicwayId` order
+		by count(*) desc;
+	</select>
+	<select id="findByScenicwayDesc" resultMap="scenicwayMap">
+		select sw.* from
+		scenicway sw,indentdetails i where sw.`id`=i.`scenicwayId` GROUP BY
+		i.`scenicwayId` order by count(*) desc;
+	</select>
+	<select id="findByCity" resultMap="scenicwayMap">
+		select sw.* from scenicway
+		sw,indentdetails i where sw.id=i.scenicwayId
+		group by endpath order by
+		COUNT(*) desc;
+	</select>
+	<select id="findByActivityAndCity" resultMap="scenicwayMap">
+		select sw.* from
+		activity a,discounts d,scenicway sw,indentdetails i
+		where
+		a.id=d.activityid AND d.scenicwayid=sw.`id` AND
+		sw.`id`=i.`scenicwayId`
+		GROUP BY sw.endpath order by
+		count(*) desc;
+	</select>
+	<select id="findByIndentdetailsGroupByPath" resultMap="scenicwayMap">
+		select
+		sw.* from scenicway sw,indentdetails i,attractions a where
+		sw.`id`=i.`scenicwayId` and a.atid=sw.attractionsId
+		AND
+		a.atrtitle=#{param1} GROUP BY
+		i.`scenicwayId`,sw.endpath order by
+		count(*) desc;
+	</select>
+	<select id="findByIndentdetails" resultMap="scenicwayMap">
+		select sw.* from
+		scenicway sw,indentdetails i,attractions a where
+		a.atid=sw.attractionsId
+		and sw.`id`=i.`scenicwayId` AND
+		a.atrtitle=#{param1} GROUP BY
+		i.`scenicwayId` order by count(*) desc
+	</select>
+	<select id="queryTitleByScenicway" resultMap="scenicwayMap">
+		select * from title t,scenicway sw,indentdetails i
+		where sw.id=i.`scenicwayId` AND t.id=sw.titleid AND t.`type`=#{param1}
+		GROUP BY
+		i.`scenicwayId` order by count(*) desc;
+	</select>
+	<select id="qureyAll" resultMap="scenicwayMap">
+		select * from scenicway  where status = 0
+	</select>
+	<!--  查询所有删除状态的路线  -->
+	<select id="queryAllDel" resultMap="scenicwayMap">
+		SELECT * FROM scenicway WHERE STATUS = 1
+	</select>
+	
+	<!-- 通过产品分类id和出发城市查询旅游景点信息并使用好评率排序 -->
+	<select id="findScenicwayByAttractionsIdAndStartpathOrderByFeedback"
+		resultMap="scenicwayMap">
+		SELECT
+		sy.*,IFNULL(SUM(mk.number)/(COUNT(0)*5)*100,0) feedback
+		FROM scenicway
+		sy
+		LEFT JOIN indentdetails itds ON itds.scenicwayId = sy.id
+		LEFT JOIN
+		indent it ON it.indentdetailsId = itds.id
+		LEFT JOIN remark rk ON
+		rk.indentid = it.id
+		LEFT JOIN mark mk ON mk.id = rk.markid
+		WHERE
+		sy.attractionsId IN
+		(SELECT atid FROM attractions
+		WHERE #{attractionsId} IN(atid,apid)
+		)
+		AND startpath LIKE CONCAT('%',#{startpath},'%')
+		AND sy.status = 0
+		GROUP BY
+		sy.id
+	</select>
+	<select id="queryScenicwayMoreWhere" resultMap="scenicwayMap">
+		select sw.*,SUM(m.`number`)/(COUNT(*)*5)*100 feedback
+		from
+		scenicway_orscenic so,scenicway sw,title t,discounts
+		d,activity
+		a,indentdetails
+		it,remark r,mark m,indent i,
+		scenic sc where
+		so.`wayId`=sw.`id`
+		AND so.`scenId`=sc.`id` and t.id=sw.titleid and
+		d.activityid=a.id
+		and
+		it.`id`=i.`indentdetailsId` AND i.`id`=r.`indentid` AND
+		r.`markid`=m.`id`
+		<if test="attractionsId!=null">
+			and
+			sw.attractionsId=#{param3}
+		</if>
+		<if test="content!=null and content!=''">
+			and
+			(sc.scenicname like concat("%",#{param1},"%")
+			or
+			sc.city
+			like concat("%",#{param1},"%")
+			or
+			sc.scenicname_pinyin like
+			concat("%",#{param1},"%"))
+		</if>
+		<if test="map.day!=null">
+			and sw.scenicday=#{map.day}
+		</if>
+		<if test="map.startpath!=null and map.startpath!=''">
+			and sw.startpath=#{map.startpath}
+		</if>
+		<if test="map.scenic!=null and map.scenic!=''">
+			and sc.scenicname=#{map.scenic}
+		</if>
+		<if test="map.title!=null and map.title!=''">
+			and t.type=#{map.title}
+		</if>
+		<if test="map.footprice!=null">
+			and sw.floor_price &gt;= #{map.footprice}
+		</if>
+		<if test="map.topprice!=null">
+			and sw.floor_price &lt;= #{map.topprice}
+		</if>
+		<if test="map.activity!=null">
+			and d.scenicwayid=sw.id
+		</if>
+		<if test="toPath!=null and toPath!=''">
+			and
+			sw.startpath like concat('%',#{param2},'%')
+		</if>
+		group by sw.id
+		<!--order!=null代表降序 -->
+		<if test="map.price!=null and map.order!=null">
+			order by sw.floor_price desc
+		</if>
+		<if test="map.price!=null and map.order==null">
+			order by sw.floor_price asc
+		</if>
+		<if test="map.praise!=null and map.order!=null">
+			order by feedback desc
+		</if>
+		<if test="map.praise!=null and map.order==null">
+			order by feedback asc
+		</if>
+	</select>
+	<!-- 路线增加 -->
+	<insert id="addScenicWay" parameterType="com.znsd.tubaba.entity.Scenicway" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `db_tubaba`.`scenicway` (
+		  `way`,
+		  `way_pinyin`,
+		  `scenicday`,
+		  `description`,
+		  `endpath`,
+		  `startpath`,
+		  `floor_price`,
+		  `titleid`,
+		  `attractionsId`,
+		  `scenicwayImage`,
+		  `minimumGroupSize`,
+		  `introduce`
+		) 
+		VALUES
+		  (
+		    #{way},
+		    #{way_pinyin},
+		    #{scenicday},
+		    #{description},
+		    #{endpath},
+		    #{startpath},
+		    #{floor_price},
+		   	#{title.id},
+		   	#{attractions.atid},
+		   	#{scenicwayImage},
+		   	#{minimumGroupSize},
+		   	#{introduce}
+		  ) ;
+	</insert>
+	<!-- 删除景点路线，修改景点路线的状态 -->
+	<update id="updateScenicwayStatus">
+		UPDATE scenicway SET `status` = 1
+		WHERE id =
+		#{id}
+	</update>
+	<!-- 删除景点路线，修改景点路线的状态 -->
+	<update id="updateScenicwayArr">
+		UPDATE scenicway SET `status` = 0
+		WHERE id =
+		#{id}
+	</update>
+	<!-- 对景点路线进行修改 -->
+	<!-- 修改景点 -->
+	<update  id="updateScenicway" parameterType="com.znsd.tubaba.entity.Scenicway">
+		update scenicway  
+			<set>
+			   <if test="way!=null and way!=''">
+			  		way =#{way},
+			   </if>
+			   <if test="way_pinyin!=null and way_pinyin!=''">
+			  		way_pinyin =#{way_pinyin},
+			   </if>
+			   <if test="scenicday!=null and scenicday!=''">
+			  		scenicday =#{scenicday},
+			   </if>
+			   <if test="description!=null and description!=''">
+			  		description =#{description	},
+			   </if>
+			    <if test="endpath!=null and endpath!=''">
+			  		endpath =#{endpath},
+			   </if>
+			    <if test="startpath!=null and startpath!=''">
+			  		startpath =#{startpath},
+			   </if>
+			    <if test="floor_price!=null and floor_price!=''">
+			  		floor_price =#{floor_price},
+			   </if>
+			   <if test="scenicwayImage!=null and scenicwayImage!=''">
+			  		scenicwayImage =#{scenicwayImage},
+			   </if>
+			   <if test="minimumGroupSize!=null and minimumGroupSize!=''">
+			  		minimumGroupSize =#{minimumGroupSize},
+			   </if>
+			   <if test="title.id!=null and title.id!=''">
+			  		titleid =#{title.id},
+			   </if>
+			   <if test="attractions.atid!=null and attractions.atid!=''">
+			  		attractionsId =#{attractions.atid},
+			   </if>
+			 </set>
+		   where id=#{id}
+	</update>
+</mapper>

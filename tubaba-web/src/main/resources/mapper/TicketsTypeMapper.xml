@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.TicketsTypeMapper">
+
+	<resultMap type="com.znsd.tubaba.entity.TicketsType" id="ticketsTypeMap">
+		<id property="id" column="id"/>
+		<result property="type" column="type"/>
+		<result property="price" column="price"/>
+	</resultMap>
+	<!-- 增加景点门票类型  -->
+	<insert id="addTicketsType" parameterType="com.znsd.tubaba.entity.TicketsType" >
+		INSERT INTO `tickets_type` (
+		  `type`,
+		  `price`,
+		  `scenicid`
+		) 
+		VALUES
+		  (
+		    #{type},
+		    #{price},
+		    #{scenic.id}
+		  ) ;
+	</insert>
+	<!-- 根据景点id查看门票类型 -->
+	<select id="queryTicketsById" resultMap="ticketsTypeMap">
+		select * from tickets_type where scenicid = #{id}
+	</select>
+	<!-- 根据景点id和门票类型查询-->
+	<select id="queryTicketsprice" resultMap="ticketsTypeMap">
+		select * from tickets_type where scenicid = #{arg0} and type = #{arg1} 
+	</select>
+	<!-- 修改门票价格  -->
+	<update id="updateTickets">
+		UPDATE `tickets_type` SET `price`=#{arg0}  WHERE id=#{arg1}
+	</update>
+</mapper>

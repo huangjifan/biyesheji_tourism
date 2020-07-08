@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.AdminMapper">
+
+	<resultMap type="com.znsd.tubaba.entity.Admin" id="admRestulMap">
+		<id property="admId" column="tbb_admId"/>
+		<result property="admName" column="tbb_admName"/>
+		<result property="admPass" column="tbb_admPass"/>
+		<result property="admSex" column="tbb_admSex"/>
+		<result property="admEmail" column="tbb_admEmail"/>
+		<result property="admPhone" column="tbb_admPhone"/>
+		<result property="admPermissions" column="tbb_admPermissions"/>
+		<result property="admState" column="tbb_admState"/>
+	</resultMap>
+	
+	<!-- 查询所有管理员 -->
+	<select id="queryAdmin" resultMap="admRestulMap">
+		SELECT * FROM admin where tbb_admState=0
+	</select>
+
+	
+	
+	<!-- 查询管理员总数 -->
+	<select id="countAdmin" resultType="Integer">
+		select count(*) from admin
+	</select>
+	
+	
+	<!-- 查询管理员状态-->
+	<select id="queryState" resultMap="admRestulMap">
+		select * from admin where tbb_admId = #{admId}
+	</select>
+	
+	<!-- 增加管理员 -->
+	<insert id="addAdmin" parameterType="com.znsd.tubaba.entity.Admin" >
+		insert into admin(
+		tbb_admName,
+		tbb_admPass,
+		tbb_admSex,
+		tbb_admEmail,
+		tbb_admPhone,
+		tbb_admPermissions,
+		tbb_admState
+		)values(
+			#{admName},
+			#{admPass},
+			#{admSex},
+			#{admEmail},
+			#{admPhone},
+			#{admPermissions},
+			#{admState}
+		)
+	</insert>
+	
+	
+	<update id = "updateState" parameterType="com.znsd.tubaba.entity.Admin" >
+		update admin set
+		 tbb_admState = #{admState},
+		 tbb_admPass = #{admPass},
+		 tbb_admName = #{admName},
+		 tbb_admSex = #{admSex},
+		 tbb_admEmail = #{admEmail},
+		 tbb_admPhone = #{admPhone},
+		 tbb_admPermissions = #{admPermissions} 
+		 
+		  where tbb_admId = #{admId}
+	</update>
+	
+	
+	<select id="queryAdminUsername" parameterType="com.znsd.tubaba.entity.Admin" resultMap="admRestulMap">
+		select * from admin
+		<where>
+			<if test="admName!=null and admName!=''">
+				and tbb_admName like concat('%',#{admName},'%')
+			</if>
+		</where>
+	</select>
+</mapper>

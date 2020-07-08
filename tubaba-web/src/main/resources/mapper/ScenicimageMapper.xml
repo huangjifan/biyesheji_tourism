@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.ScenicimageMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+
+	<resultMap type="com.znsd.tubaba.entity.Scenicimage" id="scenicimageMap">
+		<id property="id" column="id"/>
+		<result property="path" column="path"/>
+	</resultMap>
+	<!-- 增加景点图片  -->
+	<insert id="addScenicImage" parameterType="com.znsd.tubaba.entity.Scenicimage" >
+		INSERT INTO `scenicimage` (
+		  `path`,
+		  `scenicid`,
+		  `scenicwayid`
+		)
+		VALUES
+		  (
+		    #{path},
+		    #{scenic.id},
+		    #{scenicway.id}
+		  );
+	</insert>
+	<select id="queryScenicimageByScenicwayId" resultMap="scenicimageMap">
+		select * from scenicimage where scenicwayid = #{scenicwayId}
+	</select>
+	<!-- 景点id查询 -->
+	<!-- 根据景点id查询 -->
+	<select id="queryScenicimageByScenicId" resultMap="scenicimageMap">
+		select * from scenicimage where scenicid = #{scenicid}
+	</select>
+	<!-- 根据景点id删除图片 -->
+	<delete id="deleteScenicimageByScenicId">
+		DELETE FROM `scenicimage` WHERE `scenicid` = #{scenicId} 
+	</delete>
+	<!-- 根据景点路线id删除图片 -->
+	<delete id="deleteScenicimageByScenicwayId">
+		DELETE FROM `scenicimage` WHERE `scenicwayid` = #{scenicwayid}
+	</delete>
+	
+	<!-- 根据id删除图片 -->
+	<delete id="deleteScenicimageById">
+		DELETE FROM `scenicimage` WHERE id = #{id}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.CostMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="Cost" id="costMap">
+		<!-- 主键 -->
+		<id property="id" column="id"/>
+		<!-- 优惠金额 -->
+		<result property="concessionsMoney" column="concessionsMoney"/>
+		<!-- 优惠后的金额 -->
+		<result property="grossAmount" column="grossAmount"/>
+		<!-- 支付时间 -->
+		<result property="paytime" column="paytime"/>
+		<!-- 订单信息 -->
+		<!-- 费用详细信息set集合 -->
+	</resultMap>
+	
+	<!-- 增加费用 -->
+	<insert id="addCost" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO cost(concessionsMoney,grossAmount,paytime,indentId)
+		VALUES(#{concessionsMoney},#{grossAmount},#{paytime},#{indent.id});
+	</insert>
+	
+	<!-- 通过id查询费用信息 -->
+	<select id="findById" resultMap="costMap">
+		select * from cost where id = #{id}
+	</select>
+	
+	<!-- 通过indentId查询费用信息 -->
+	<select id="findByIndentId" resultMap="costMap">
+		select * from cost where indentId = #{indentId}
+	</select>
+	
+	<!-- 修改费用 -->
+	<update id="update">
+		update cost <set>
+			<if test="paytime != null">
+				paytime = #{paytime},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+</mapper>

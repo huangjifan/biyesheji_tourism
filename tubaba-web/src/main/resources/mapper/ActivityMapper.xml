@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.ActivityMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+
+	<resultMap type="com.znsd.tubaba.entity.Activity" id="activityRestulMap">
+		<id property="id" column="id" />
+		<result property="way" column="way" />
+		<result property="starttime" column="starttime" />
+		<result property="state" column="state" />
+		<result property="endtime" column="endtime" />
+		<!-- 活动分类信息 -->
+		<association property="typeid" column="typeid"
+			select="com.znsd.tubaba.mapper.Activity_typeMapper.queryTypeOne" />
+	</resultMap>
+	
+	<!-- 查询活动信息 -->
+	<select id="queryActivity" resultMap="activityRestulMap">
+		<!-- SELECT
+		act.`id`,act.`way`,act.`endtime`,act.`starttime`,acttype.`id`,acttype.`name`
+		as `nametest`,
+		acttype.`arithmeticid` as `idTest`
+		FROM activity act INNER JOIN
+		activity_type acttype ON act.`typeid` = acttype.`id` WHERE act.`state` = 0
+		and acttype.`state`=0 -->
+		select * from activity where state = 0
+	</select>
+
+	<!-- 根据id查询活动 -->
+	<select id="queryActivityOne" resultMap="activityRestulMap">
+		<!-- SELECT
+		act.`id`,act.`way`,act.`endtime`,act.`starttime`,acttype.`id`,acttype.`name`,acttype.`arithmeticid`
+		FROM activity act INNER JOIN
+		activity_type acttype ON act.`typeid` = acttype.`id` WHERE act.`state` = 0
+		and acttype.`state`=0 AND act.`id`=#{id} -->
+		select * from activity where id = #{id} and state = 0
+	</select>
+
+	<!-- 增加活动信息 -->
+	<insert id="addActivity" parameterType="com.znsd.tubaba.entity.Activity">
+		insert into activity(
+		`way`,
+		`starttime`,
+		`endtime`,
+		state,
+		`typeid`
+
+		)values(
+		#{way},
+		#{starttime},
+		#{endtime},
+		0,
+		#{typeid.id}
+		)
+	</insert>
+
+	<update id="updateActivity" parameterType="com.znsd.tubaba.entity.Activity">
+		update activity set
+		way = #{way},
+		starttime = #{starttime},
+		endtime = #{endtime},
+		typeid = #{typeid.id}
+		where id = #{id}
+	</update>
+
+
+	<!-- 删除活动 -->
+	<update id="delActivity" parameterType="com.znsd.tubaba.entity.Activity">
+		UPDATE activity SET state
+		= 1 WHERE id = #{id}
+	</update>
+</mapper>

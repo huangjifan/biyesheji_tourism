@@ -1,0 +1,942 @@
+@charset "utf-8";
+.question-detail {
+  padding: 24px 30px 0px 30px;
+  border: 1px solid #ccc;
+  background: #fff;
+  margin-bottom: 20px;
+}
+.question-detail .question-wrc-title {
+  margin-bottom: 9px;
+}
+.question-detail .question-detail-section {
+  font-size: 14px;
+  color: #666;
+  line-height: 24px;
+  margin-bottom: 16px;
+}
+.anthor-share {
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+}
+.anthor-share .tip-icon-share {
+  width: 16px;
+  height: 14px;
+  background-position: 0px -60px;
+  vertical-align: -3px;
+  *vertical-align: 0px;
+  margin-right: 5px;
+}
+.anthor-share:hover {
+  color: #f60;
+}
+.anthor-share:hover .tip-icon-share {
+  background-position: -20px -60px;
+}
+.question-anthor {
+  margin-bottom: 29px;
+  padding-top: 20px;
+  *padding-bottom: 29px;
+}
+.question-anthor .anthor-date {
+  margin: 0px;
+}
+.question-anthor b.line {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 1px;
+  height: 12px;
+  background: #ccc;
+  margin: 0px 1px 0px 8px;
+  vertical-align: -1px;
+}
+.eh-share-box {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  top: 0;
+  width: 192px;
+  height: 70px;
+  background-color: #fff;
+  background-image: url(http://pic.lvmama.com/img/v6/travels/view.png);
+  background-position: 0 -280px;
+}
+
+.eh-share-box a {
+  color: #666;
+  float: left;
+  width: 64px;
+  height: 72px;
+  line-height: 104px;
+  text-align: center;
+  overflow: hidden;
+}
+.eh-share-box a:hover {
+  color: #f60;
+}
+.et-share-box {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  top: 0;
+  width: 192px;
+  height: 70px;
+  background-color: #fff;
+  background-image: url(http://pic.lvmama.com/img/v6/travels/view.png);
+  background-position: 0 -280px;
+}
+.et-share-box a {
+  color: #666;
+  float: left;
+  width: 64px;
+  height: 72px;
+  line-height: 104px;
+  text-align: center;
+  overflow: hidden;
+}
+.et-share-box a:hover {
+  color: #f60;
+}
+/*寰俊鍒嗕韩 START*/
+.e-weixin-share-box {
+  display: none;
+  width: 624px;
+  height: 334px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin: -167px 0 0 -312px;
+  z-index: 12;
+}
+.ewsb-border {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 624px;
+  height: 334px;
+  background-color: #000000;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+.ewsb-share {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 612px;
+  height: 316px;
+  border: solid 1px #999999;
+  background-color: #fff;
+  padding: 6px 0 0 0;
+}
+.ewsb-code {
+  float: left;
+  width: 300px;
+  border-right: solid 1px #DDDDDD;
+  height: 300px;
+}
+.ewsb-code p {
+  line-height: 28px;
+  height: 28px;
+  padding: 22px 0 19px 0;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+.ewsb-code img {
+  margin-left: 50px;
+}
+.ewsb-step {
+  float: left;
+  width: 300px;
+  height: 300px;
+  background-image: url(http://pic.lvmama.com/img/v6/travels/share.png);
+}
+.ewsb-close {
+  background-image: url(http://pic.lvmama.com/img/v6/travels/view.png);
+  background-position: 0 -740px;
+  display: block;
+  height: 25px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 25px;
+}
+.ewsb-close:hover {
+  background-image: url(http://pic.lvmama.com/img/v6/travels/view.png);
+  background-position: -30px -740px;
+}
+/*寰俊鍒嗕韩 END*/
+.question-anthor-message a.follow {
+  margin-right: 10px;
+}
+.question-result {
+  padding: 13px 29px 11px 30px;
+  height: 16px;
+  line-height: 16px;
+  background: #fbfbfb;
+  margin: 0px -29px 0px -30px;
+  *margin: -29px -29px 0px -30px;
+  position: relative;
+}
+.question-result .all-question {
+  font-size: 12px;
+  color: #999;
+  line-height: 16px;
+}
+.question-result .all-question b {
+  font-size: 14px;
+  color: #ff9900;
+  font-weight: normal;
+  margin: 0px 4px;
+}
+.question-fuli {
+  position: absolute;
+  top: 13px;
+  right: 29px;
+  font-size: 12px;
+  color: #333;
+  line-height: 16px;
+}
+.question-fuli .fuli-flag {
+  padding: 0px 5px 0px 4px;
+  color: #fff;
+  background: #f80;
+  border-radius: 2px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  height: 16px;
+  margin-right: 5px;
+  font-family: "PingFang SC", "simsun", sans-serif;
+}
+.question-fuli .fuli-tips {
+  color: #999;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+.detail-box {
+  background: #fff;
+  padding: 19px 29px 0px 30px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+.detail-box .detail-title {
+  font-size: 16px;
+  line-height: 16px;
+  color: #666;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.detail-relatoin ul {
+  margin-top: -1px;
+}
+.detail-relatoin li {
+  border-top: 1px dashed #ccc;
+  position: relative;
+}
+.detail-relatoin li .question-wrc-title {
+  margin: 13px 0px 14px;
+  *padding-top: 13px;
+  width: 594px;
+  max-height: 26px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.detail-relatoin li .question-anthor-message {
+  top: 18px;
+}
+.answer-box {
+  padding: 40px 30px 31px 29px;
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+.nchimg {
+  width: 60px;
+  float: left;
+  display: block;
+  height: 60px;
+  border-radius: 50%;
+}
+.answer-box-right {
+  width: 755px;
+  float: right;
+  position: relative;
+}
+.nchtextarea {
+  width: 753px;
+  height: 88px;
+  border: 1px solid #ccc;
+  background: #fff;
+  position: relative;
+  margin-bottom: 10px;
+}
+.nchtextarea textarea {
+  border: 0;
+  outline: 0;
+  resize: none;
+  width: 733px;
+  height: 58px;
+  padding: 5px 10px 0px;
+  line-height: 20px;
+  box-shadow: none;
+}
+.nchtextarea .tbmac-tip-normal {
+  font-size: 12px;
+  color: #999;
+  line-height: 22px;
+}
+.nchtextarea .tbmac-tip-normal b {
+  color: #666;
+}
+.nchtextarea .tbmac-tip-normal b,
+.nchtextarea .tbmac-tip-normal em {
+  font-weight: normal;
+}
+.nchtextarea .tbmac-tip {
+  display: inline-block;
+  font-size: 12px;
+  color: #999999;
+  margin-right: 14px;
+  position: absolute;
+  right: 0px;
+  bottom: 3px;
+}
+.nchtextarea textarea::-webkit-scrollbar {
+  width: 10px;
+  background: #E3E3E3;
+  border-radius: 5px;
+}
+.nchtextarea textarea::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}
+.nchtextarea textarea::-webkit-scrollbar-thumb {
+  min-height: 20px;
+  background-clip: content-box;
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2) inset;
+}
+.nchtextarea textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.tip-icon-left-sangle {
+  width: 6px;
+  height: 11px;
+  background-position: 0px -80px;
+  position: absolute;
+  top: 12px;
+  left: -6px;
+}
+.answer-submit {
+  padding-left: 2px;
+  height: 30px;
+  position: relative;
+}
+.answer-submit p {
+  font-size: 12px;
+  color: #999;
+  line-height: 12px;
+  *line-height: 14px;
+}
+.answer-submit .tip-icon-error {
+  width: 14px;
+  height: 14px;
+  background-position: -20px -80px;
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+.answer-submit .answer-submit-btn {
+  height: 30px;
+  font-size: 12px;
+  color: #333;
+  line-height: 30px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.answer-submit .answer-error {
+  margin-right: 19px;
+  line-height: 30px;
+  *vertical-align: 6px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+.tbmac-tip-low em {
+  color: #f30;
+}
+.product-display {
+  padding: 15px 16px 0px 15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+.product-display ul.product-ul {
+  margin-top: -1px;
+  margin-bottom: -3px;
+}
+.product-display ul.product-ul li {
+  padding: 17px 0px 19px;
+  border-top: 1px dashed #ccc;
+}
+.display-title {
+  margin-bottom: 8px;
+  max-height: 36px;
+  overflow: hidden;
+  font-size: 12px;
+  color: #666;
+  line-height: 18px;
+}
+.display-title b {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 1px;
+  height: 12px;
+  margin: 0px 10px;
+  vertical-align: -2px;
+  background: #ccc;
+}
+.display-title a {
+  font-size: 12px;
+  color: #333;
+  line-height: 18px;
+}
+.display-title a:hover {
+  color: #f60;
+  text-decoration: none;
+}
+.display-price {
+  padding-left: 2px;
+  height: 16px;
+  *height: 19px;
+  overflow: hidden;
+}
+.display-price .nowPrice {
+  font-size: 12px;
+  color: #999;
+  line-height: 16px;
+}
+.display-price .nowPrice b {
+  font-weight: normal;
+  font-size: 16px;
+  color: #f60;
+  margin-right: 3px;
+}
+.display-price .beforePrice {
+  font-size: 14px;
+  color: #bbb;
+  text-decoration: line-through;
+  line-height: 16px;
+  margin-left: 11px;
+}
+.product-img {
+  background: url("http://pic.lvmama.com/img/new_v/ui_scrollLoading/loading.gif") no-repeat center center #fff;
+  width: 252px;
+  height: 170px;
+  position: relative;
+}
+.product-img a {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.3);
+  filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#4c000000, 0, endColorstr=#4c000000, 0);
+  width: 100%;
+  height: 94px;
+  padding-top: 76px;
+}
+.product-img a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+.product-img span {
+  display: block;
+  text-align: center;
+  color: #fff;
+}
+.product-img span.title {
+  font-size: 20px;
+  margin: 0px auto;
+  margin-bottom: 9px;
+  line-height: 20px;
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 160px;
+}
+.product-img span.flag {
+  font-size: 12px;
+  margin: 0px auto;
+  margin-bottom: 9px;
+  line-height: 12px;
+  height: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 93px;
+}
+:root .product-img a {
+  filter: none;
+}
+.answers-box {
+  margin-bottom: 20px;
+}
+.answer-list {
+  padding: 0px 20px;
+  background: #fff;
+}
+.answer-list ul {
+  margin-top: -1px;
+}
+.answer-list li {
+  padding: 20px 10px 20px 11px;
+  border-top: 1px solid #ddd;
+}
+.answer-list-right {
+  width: 753px;
+  float: right;
+}
+.answer-list-right .answer-anthor {
+  font-size: 14px;
+  color: #333;
+  line-height: 18px;
+  max-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 7px;
+}
+.answer-list-right .answer-passage {
+  font-size: 14px;
+  color: #666;
+  line-height: 22px;
+  margin-bottom: 4px;
+}
+.answer-list-right .question-anthor {
+  padding: 0px;
+  height: auto;
+  margin-bottom: 0px;
+  *position: static;
+}
+.answer-list-right .question-anthor-message {
+  float: right;
+  position: static;
+  padding-top: 5px;
+}
+.answer-list-right .question-anthor-message .icon-delete,
+.answer-list-right .question-anthor-message .icon-edit,
+.answer-list-right .question-anthor-message .icon-agree,
+.answer-list-right .question-anthor-message .icon-comment {
+  cursor: pointer;
+  font-size: 12px;
+  color: #999;
+  vertical-align: -1px;
+  *vertical-align: 0px;
+}
+.answer-list-right .question-anthor-message .icon-delete em,
+.answer-list-right .question-anthor-message .icon-edit em,
+.answer-list-right .question-anthor-message .icon-agree em,
+.answer-list-right .question-anthor-message .icon-comment em {
+  font-size: 14px;
+  color: #999;
+  margin: 0px 0px 0px 5px;
+}
+.answer-list-right .question-anthor-message .icon-agree {
+  position: relative;
+}
+.answer-list-right .question-anthor-message .icon-agree dfn {
+  font-size: 12px;
+  color: #ee3388;
+  position: absolute;
+  right: 0px;
+  top: -15px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.answer-list-right .question-anthor-message .icon-agree dfn.move {
+  -webkit-animation: move 0.8s ease;
+  -moz-animation: move 0.8s ease;
+  -ms-animation: move 0.8s ease;
+  -o-animation: move 0.8s ease;
+  animation: move 0.8s ease;
+}
+@keyframes move {
+  90% {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    top: -20px;
+  }
+  100% {
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+}
+.answer-list-right .question-anthor-message .icon-agree.active {
+  cursor: default;
+}
+.answer-list-right .question-anthor-message .icon-delete:hover,
+.answer-list-right .question-anthor-message .icon-edit:hover,
+.answer-list-right .question-anthor-message .icon-agree:hover,
+.answer-list-right .question-anthor-message .icon-comment:hover,
+.answer-list-right .question-anthor-message .icon-delete.active,
+.answer-list-right .question-anthor-message .icon-edit.active,
+.answer-list-right .question-anthor-message .icon-agree.active,
+.answer-list-right .question-anthor-message .icon-comment.active {
+  color: #ee3388;
+}
+.tip-icon-delete {
+  width: 11px;
+  height: 12px;
+  background-position: 0px -100px;
+  margin-right: 5px;
+}
+.tip-icon-edit {
+  width: 10px;
+  height: 12px;
+  background-position: -20px -100px;
+  margin-right: 5px;
+}
+.tip-icon-agree {
+  width: 12px;
+  height: 12px;
+  background-position: 0px -120px;
+  margin-right: 5px;
+}
+.tip-icon-comment {
+  width: 14px;
+  height: 11px;
+  background-position: -20px -120px;
+  margin-right: 5px;
+}
+.icon-delete:hover .tip-icon-delete,
+.icon-delete.active .tip-icon-delete {
+  background-position: 0px -160px;
+}
+.icon-edit:hover .tip-icon-edit,
+.icon-edit.active .tip-icon-edit {
+  background-position: -20px -160px;
+}
+.icon-agree:hover .tip-icon-agree,
+.icon-agree.active .tip-icon-agree {
+  background-position: 0px -140px;
+}
+.icon-comment:hover .tip-icon-comment,
+.icon-comment.active .tip-icon-comment {
+  background-position: -20px -140px;
+}
+.float-delete-comment {
+  padding: 10px;
+  width: 140px;
+  position: relative;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 12px;
+  color: #333;
+  line-height: 14px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 10;
+}
+.tip-icon-tips {
+  width: 15px;
+  height: 14px;
+  margin-right: 5px;
+  background-position: 0px -180px;
+  vertical-align: middle;
+}
+.comment-btn {
+  padding: 8px 0px 0px 19px;
+  font-size: 0px;
+}
+.comment-btn .btn-orange {
+  margin-right: 10px;
+}
+.tip-icon-trangle {
+  width: 11px;
+  height: 7px;
+  background-position: -20px -180px;
+  position: absolute;
+  bottom: -7px;
+  left: 21px;
+}
+.comment-content {
+  width: 754px;
+  margin-top: 11px;
+  display: none;
+}
+.comment-content > .submit-comment {
+  z-index: 1;
+}
+.submit-comment {
+  position: relative;
+  padding: 21px 20px 20px;
+  background: #f5f5f5;
+}
+.submit-comment .submit-sangle {
+  display: block;
+  width: 0px;
+  height: 0px;
+  border-width: 0px 5px 5px 5px;
+  border-style: dashed solid solid solid;
+  border-color: transparent transparent #f5f5f5 transparent;
+  position: absolute;
+  top: -5px;
+  right: 22px;
+}
+.submit-comment .nchtextarea {
+  width: 713px;
+  height: 68px;
+}
+.submit-comment .nchtextarea textarea {
+  width: 693px;
+  height: 38px;
+}
+.submit-reply {
+  margin-bottom: -20px;
+}
+.submit-reply li {
+  padding: 20px 0px;
+  border-top: 1px dashed #ccc;
+  position: relative;
+}
+.submit-reply li .anthor-img {
+  float: left;
+  border-radius: 50%;
+  margin-right: 13px;
+}
+.submit-reply li .reply-content {
+  margin-left: 45px;
+}
+.submit-reply li .reply-opperate {
+  width: 90px;
+  float: right;
+  font-size: 0px;
+}
+.submit-reply li .reply-opperate a {
+  font-size: 12px;
+  color: #3388dd;
+}
+.submit-reply li .reply-opperate a:hover {
+  color: #f60;
+}
+.submit-reply li .reply-opperate a.active {
+  color: #f60;
+}
+.submit-reply li .reply-opperate b {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 1px;
+  height: 13px;
+  margin: 0px 15px;
+  background: #ccc;
+  vertical-align: -3px;
+}
+.submit-reply li .submit-comment {
+  margin-top: 20px;
+  display: none;
+  *position: static;
+}
+.replay-content-date {
+  font-size: 12px;
+  color: #999;
+  line-height: 12px;
+}
+.reply-content-passage {
+  font-size: 12px;
+  color: #666;
+  line-height: 18px;
+  margin-bottom: 9px;
+}
+.reply-content-passage span {
+  color: #333;
+}
+.reply-content-passage em {
+  font-weight: normal;
+  margin: 0px 5px 0px 10px;
+}
+.reply-word {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+.nchpage {
+  padding: 10px 10px 0px 0px;
+  border-top: 1px dashed #ccc;
+  text-align: right;
+  margin-top: 20px;
+  height: 19px;
+  font-size: 0px;
+  line-height: 19px;
+}
+.nchpage .ncpages {
+  font-size: 12px;
+  color: #333;
+  padding-right: 6px;
+}
+.nchpage .ncpages b {
+  color: #ed3387;
+  margin-right: 3px;
+}
+.nchpage .page-btn {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #ccc;
+  text-align: center;
+  margin-left: 5px;
+  line-height: 17px;
+  vertical-align: 6px;
+  vertical-align: bottom \9;
+  cursor: pointer;
+}
+.nchpage .page-btn-prev.disabled b {
+  border-color: transparent #ddd transparent transparent;
+}
+.nchpage .page-btn-prev b {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 0px;
+  height: 0px;
+  border-width: 4px 4px 4px 0px;
+  border-style: dashed solid dashed dashed;
+  border-color: transparent #999 transparent transparent;
+  vertical-align: middle;
+  margin-top: 4px \9;
+}
+.nchpage .page-btn-next.disabled b {
+  border-color: transparent transparent transparent #ddd;
+}
+.nchpage .page-btn-next b {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 0px;
+  height: 0px;
+  border-width: 4px 0px 4px 4px;
+  border-style: dashed dashed dashed solid;
+  border-color: transparent transparent transparent #999;
+  vertical-align: middle;
+  margin-top: 4px \9;
+}
+.product-content li {
+  margin-bottom: 15px;
+}
+.product-content li .tabcon-left {
+  width: 120px;
+  float: left;
+}
+.product-content li .tabcon-left img {
+  display: block;
+}
+.product-content li .tabcon-right {
+  width: 122px;
+  float: right;
+}
+.product-content li .tabcon-right a {
+  display: block;
+  font-size: 12px;
+  color: #333;
+  line-height: 18px;
+  max-height: 36px;
+  overflow: hidden;
+  margin-bottom: 11px;
+}
+.product-content li .tabcon-right a:hover {
+  color: #f60;
+  text-decoration: none;
+}
+.product-content li .tabcon-right span {
+  display: block;
+}
+.product-content li .tabcon-right span.tabcon-price {
+  font-size: 12px;
+  color: #999;
+  line-height: 13px;
+  margin-bottom: 5px;
+}
+.product-content li .tabcon-right span.tabcon-price b {
+  font-size: 16px;
+  color: #f60;
+  font-weight: normal;
+  margin-right: 4px;
+}
+.product-content li .tabcon-right span.tabcon-through {
+  font-size: 14px;
+  color: #bbb;
+  line-height: 10px;
+  text-decoration: line-through;
+}
+.product-content li .tabcon-right .tabcon-pragh {
+  font-size: 12px;
+  color: #999;
+  line-height: 18px;
+  max-height: 36px;
+  overflow: hidden;
+  margin-top: -2px;
+}
+.product-display .common-nav {
+  padding: 15px 0px 6px 0px;
+  margin-left: -4px;
+}
+.product-display .pinjing-img {
+  margin-bottom: 20px;
+}
+.nav-fixed {
+  width: 100%;
+  height: 60px;
+  box-shadow: 4px 8px 2px -4px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: #fff;
+  display: none;
+  z-index: 100;
+}
+.nav-fixed-con {
+  padding: 15px 0px 15px 21px;
+  width: 1179px;
+  margin: 0px auto;
+  height: 30px;
+  position: relative;
+}
+.nav-fixed-con .question-wrc-title {
+  width: 978px;
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-fixed-con .question-anthor-message {
+  width: 170px;
+  position: absolute;
+  top: 15px;
+  right: 0px;
+}
+.detail-relatoin .question-wrc-title a {
+  font-size: 14px;
+}
+.eh-share-box-small{
+  width:128px;
+  background-position: 0px -200px;
+}
+.tip-icon-tip{
+  background-position: 0px -260px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.answer-box-right-tips{
+  position: absolute;
+  top: -25px;
+  left: 0px;
+}

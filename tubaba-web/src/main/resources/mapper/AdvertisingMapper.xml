@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.AdvertisingMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+	
+	<resultMap type="com.znsd.tubaba.entity.Advertising" id="advertisingMapper">
+		<id property="id" column="id"/>
+	    <result property="img" column="img"/>
+	    <result property="index" column="index"/>
+	    <result property="starttime" column="starttime"/>
+	    <result property="endtime" column="endtime"/>
+	    <result column="type" property="type"/>
+	    <!-- 一对一映射广告分类信息 -->
+	    <association property="adverclasId" column="adverclasId" select="com.znsd.tubaba.mapper.Advertising_classifyMapper.queryOneId" fetchType="lazy">
+	    </association> 
+	   <!--  
+	   <association property="adverclasId" javaType="com.znsd.tubaba.entity.AdvertisingClassify"  >
+		    <id column="agcfid" property="id"/>
+			<result column="name" property="name"/>
+			<result column="upid" property="upid"/>
+			<result column="type" property="type"/>
+	    </association>
+	     -->
+	</resultMap>
+	<!-- 增加广告 seGeneratedKeys="true"、keyProperty="id"，这两个属性的作用：共同决定了sql执行后，会将主键封装到id属性上 调用对象的getId()方法 -->
+	<!-- 
+	<insert id="addAdvertising" parameterType="com.znsd.tubaba.entity.Advertising" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO advertising(productid,img,attractionsid) VALUES(#{productid},#{img},#{attractions.atid})
+	</insert>
+	
+		INSERT INTO advertising(productid,img) VALUES(#{productid},#{img},#{attractions.atid})
+	</insert> 
+	-->
+	<!-- 通过广告分类编号查询广告信息 -->
+	<select id="queryAdvertisingByAdverclasId" resultMap="advertisingMapper">
+		SELECT ag.*,agcf.id agcfid,agcf.name,agcf.upid,agcf.type FROM advertising ag INNER JOIN advertising_classify agcf ON ag.adverclasId = agcf.id
+		WHERE agcf.upid IN (SELECT id FROM advertising_classify WHERE id = #{classifyId} OR upid = #{classifyId})
+		ORDER BY ag.adverclasId,ag.index
+	</select>
+	
+	 <!--  广告增加  -->
+	<insert id="addAdvertising" parameterType="com.znsd.tubaba.entity.Advertising" useGeneratedKeys="true" keyProperty="id">
+		insert into advertising(img,adverclasId,`index`,starttime,endtime) values(#{img},#{adverclasId.id},#{index},#{starttime},#{endtime})
+	</insert> 
+	
+	<!-- 查询广告 -->
+	<select id="queryAll" resultMap="advertisingMapper">
+		select * from advertising where type=0
+	</select>
+	
+	<!-- 通过广告编号查询广告信息 -->
+	<select id="queryAdvertising" parameterType="int" resultMap="advertisingMapper">
+		select * from advertising where id=#{id}
+	</select>
+	
+	<!-- 增加广告记录表  -->
+	<insert id="addAdverOrAdsing">
+		insert into advertising_product_record(atId,scewayId,advertisingid,scenId,hotel_scenId) values(#{arg0},#{arg1},#{arg2},#{arg3},#{arg4})
+	</insert>
+	
+	<!-- 删除指定的广告信息 -->
+	<update id="deleteAdsing">
+		update advertising set type=#{arg0} where id=#{arg1}
+	</update>
+</mapper>

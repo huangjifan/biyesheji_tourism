@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.LinkManMapper">
+	<resultMap type="com.znsd.tubaba.entity.LinkMan" id="linkManMapper">
+	    <id property="id" column="id"/>
+	    <result property="realname" column="realname"/>
+	    <result property="iphone" column="iphone"/>
+	    <result property="email" column="email"/>
+	    <collection property="playMans" fetchType="lazy" ofType="com.znsd.tubaba.entity.PlayMan" select="findPlayManByLinkManId"  column="id" />
+ 	</resultMap>
+ 	
+ 	<!-- 通过联系人id查找联系人 -->
+ 	<select id="findByLinkManId" resultMap="linkManMapper">
+ 		select * from linkman where id = #{id}
+ 	</select>
+ 	
+ 		<!-- 通过联系人id查找联系人 -->
+ 	<select id="findByLinkManName" resultMap="linkManMapper">
+ 		select id from linkman where realname = #{realname}
+ 	</select>
+ 	
+ 	<!-- 通过联系人id查找游玩人 -->
+ 	<select id="findPlayManByLinkManId" resultType="com.znsd.tubaba.entity.PlayMan">
+ 		select * from playman where linkmanid = #{linkmanid}
+ 	</select>
+ 	
+ 	<!-- 增加联系人 -->
+ 	<insert id="addLinkMan" keyProperty="id" useGeneratedKeys="true">
+ 		INSERT INTO linkman(realname,iphone,email)
+		VALUES(#{realname},#{iphone},#{email})
+ 	</insert>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.MySpaceCommonMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+ 	<resultMap type="com.znsd.tubaba.entity.Indentdetails" id="indentdetailsMap">
+ 		<id property="id" column="id" />
+ 		<result property="orderstime" column="orderstime" />
+ 		<result property="peopleCount" column="peopleCount" />
+ 		<result property="copies" column="copies" />
+ 		<result property="ciruit" column="ciruit" />
+ 		<result property="starttime" column="starttime" />
+ 		<result property="endtime" column="endtime" />
+ 		<result property="status" column="status" />
+ 		<!-- 通过association来设置关联关系，通过resultMap来引用clazz映射文件中配置resultMap(推荐)  分步查询-->
+	 	<association property="indent" javaType="com.znsd.tubaba.entity.Indent" resultMap="com.znsd.tubaba.mapper.IndentMapper.indentMapper" />
+	 	<association property="scenic" fetchType="lazy" column="scenicid" select="com.znsd.tubaba.mapper.ScenicMapper.queryScenicById" />
+	    <association property="scenicway" fetchType="lazy" column="scenicwayId" select="com.znsd.tubaba.mapper.ScenicwayMapper.queryById" />
+ 	</resultMap>
+ 	<!-- 查询待点评 -->
+ 	<select id="myCommonAll" resultMap="indentdetailsMap">
+ 		SELECT * FROM indentdetails a INNER JOIN  indent b ON a.id=b.indentdetailsId WHERE a.userid=#{param1} AND b.indentstatus=5
+ 		
+ 	</select>
+ 	<!-- 查询已点评 -->
+ 	<select id="ydpAll" resultMap="indentdetailsMap">
+ 		 SELECT * FROM indentdetails a INNER JOIN  indent b ON a.id=b.indentdetailsId WHERE a.userid=#{param1} AND b.indentstatus=6
+ 	</select>
+ 	<!-- 查询待点评的数量 -->
+ 	<select id="ddp" resultType="int">
+ 		SELECT COUNT(1) FROM indentdetails a INNER JOIN  indent b ON a.id=b.indentdetailsId WHERE a.userid=#{param1} AND b.indentstatus=5
+ 	</select>
+ 	<!-- 查询已点评的数量 -->
+ 	<select id="ydp" resultType="int">
+ 		SELECT COUNT(1) FROM indentdetails a INNER JOIN  indent b ON a.id=b.indentdetailsId WHERE a.userid=#{param1} AND b.indentstatus=6
+ 	</select>
+</mapper>

@@ -1,0 +1,324 @@
+@charset "utf-8";
+/* CSS Document */
+/*新版支付列表的支付增加样式*/
+.wrap .paynew .bank-list li{margin: 0 45px 5px 4px;height:65px;}
+.new_pay_posBox{ position:relative}
+.new_pay_tjTips{background:url(../../image/tj_new.png) no-repeat;width:27px;height:27px;margin-left:30px;display:block; position:absolute;right:1px;top:6px;}
+.new_pay_Tips{background:url(../../image/tj_new.png) no-repeat 0 -30px;width:26px; padding-right:1px; height:27px;margin-left:30px;display:block; position:absolute;right:1px;top:6px;text-align: right; color: #fff; line-height: 16px;}
+.new_pay_newsBox{width:auto;height:20px;margin-left:21px;margin-top:2px;display:none;}
+.new_pay_prefnewsBox{float:left;height:16px;line-height:16px;color:#333;font-size:12px;}
+.new_pay_prefnewsBox_tips{display:inline-block;background:#f80;color:#fff;padding:0 2px;margin-right:5px}
+.paynew .bank-list .bank{padding:0 6px;}
+.paynew .icbc{background-position:10px -120px}
+.paynew .cmb{background-position:10px -280px;}
+.paynew .ccb {
+    background-position: 10px -80px;
+}
+.paynew .boc {
+    background-position: 10px -40px;
+}
+.paynew .abc {
+    background-position: 10px 0;
+}
+.paynew .comm {
+    background-position: 10px -320px;
+}
+.paynew .ceb {
+    background-position: 10px -200px;
+}
+.paynew .spdb {
+    background-position: -290px -40px;
+}
+.paynew .cgb {
+    background-position: -290px -120px;
+}
+.paynew .ecitic {
+    background-position: -290px -280px;
+}
+.paynew .cib {
+    background-position: -290px -80px;
+}
+.paynew .cmbc {
+    background-position: 10px -240px;
+}
+.paynew .bjbank {
+    background-position: -140px 0;
+}
+.paynew .hzbank {
+    background-position: -140px -120px;
+}
+.paynew .shbank {
+    background-position: -140px -40px;
+}
+.paynew .bjrcb {
+    background-position: -140px -320px;
+}
+.paynew .pingan {
+    background-position: -290px -320px;
+}
+.paynew .fudian {
+    background-position: -290px -360px;
+}
+.paynew .nbcb {
+    background-position: -140px -160px;
+}
+.paynew .psbc {
+    background-position: 10px -160px;
+}
+.paynew .wzcb {
+    background-position: -140px -240px;
+}
+.paynew .baidupay {
+    background-position: 10px -360px;
+}
+.paynew .tenpay {
+    background-position: -440px -40px;
+}
+.paynew .tenpay-quick {
+    background-position: -440px -280px;
+}
+.paynew .weixinpay {
+    background-position: -440px -439px;
+}
+.paynew .alipay {
+    background-position: -440px 0;
+}
+.paynew .alipayCode {
+    background-position: -440px -400px;
+}
+.paynew .alipay-quick {
+    background-position: -440px -240px;
+}
+.paynew .unionpay2 {
+    background-position: -440px -360px;
+}
+.paynew .unionpay-quick {
+    background-position: -440px -320px;
+}
+.paynew .cmpay {
+    background-position: -440px -200px;
+}
+.paynew .zyxf {
+background-position: -304px -400px;
+}
+
+.paynew .wlt {
+background-position: -145px -400px;
+}
+
+/*分期付款样式
+2015-07-16 wang
+*/
+.fq-tip-blue{ border:1px solid #88BBEE; background:#F0F5FC; color:#333333;}
+label.fq-pay-label{ padding-top:10px;}
+.fq-pay-label input.input-radio{ vertical-align:top; margin-top:10px;}
+.fq-pay-label .new_pay_tjTips{ top:11px;}
+.fq-poptip{ display:block; border:1px solid #E3E3E3; position:relative; margin-top:12px;}
+.tip-arrow-12, .tip-arrow-0, .tip-arrow-6{ left: 50%; margin-left: -8px;}
+.tip-arrow-11, .tip-arrow-top, .tip-arrow-12, .tip-arrow-0, .tip-arrow-1{ top:-8px;}
+.tip-arrow{ height: 14px;  position: absolute; width: 16px;}
+.tip-arrow i, .tip-arrow em{font-family: SimSun,Tahoma,Arial,宋体,sans-serif; font-size: 14px; font-style: normal; font-weight: normal; line-height: 1; position: absolute;}
+.tip-arrow-11 i, .tip-arrow-top i, .tip-arrow-12 i, .tip-arrow-0 i, .tip-arrow-1 i{ top:1px;}
+.tip-content{ padding:10px 15px;}
+.fq-tip-content{ display:none;}
+.fq-tip-content.active{ display:block;}
+.fq-tip-content li{ height:33px; line-height:33px; color:#666666; font-family:Arial, simsun;}
+.fq-tip-content li input{ vertical-align:text-bottom;}
+.fq-tip-content li span{ color:#FF6600;}
+.fq-poptip .tip-arrow-12{ left:88px;}
+.order-main label.active .bank{ border:1px solid #ff9600;}
+
+/*订单付款tab 添加推荐提示*/
+.order-tabnav-tj { position: absolute; top: -10px; right: -10px;}
+
+/*小驴分期*/
+.tiptext-fq { position: relative; width: 910px; _height: 80px;  max-height: 80px; overflow: hidden; line-height: 20px; color: #333; }
+.tiptext-fq.open { _height: 100%; max-height: 100%;}
+.tiptext-fq.open .tiptext-openMore span{ top: -3px;}
+a.tiptext-openMore { position: absolute; right: 0; bottom: 0; line-height: 14px;}
+.tiptext-openMore span { display: inline-block; position: relative; top: 2px; width: 0; height: 0; margin-left: 4px; vertical-align: bottom; border:5px solid transparent; border-top-color: #09c;}
+.open .tiptext-openMore span { border-top-color: transparent; border-bottom-color: #09c;}
+.tip-xlfq label{ display: block; overflow: hidden; height: 24px; line-height: 28px; overflow: hidden;}
+.tip-xlfq input { vertical-align: middle;}
+.tip-xlfqText { position: relative; margin-top: 10px; padding: 10px 0 0 18px; border-top: 1px dashed #ccc;}
+.tip-xlfqText .tip-icon { position: absolute; left: 0; top: 15px; }
+
+/*小驴白条*/
+.order-main .paynewbox{ margin-top:20px; margin-bottom:0px;}
+.mlv_box_pay{ position:relative; z-index:5;}
+.mlv_icon{ background:url(../../image/pay_icon.png) no-repeat;}
+
+.mlv_box{ padding:7px 20px 0 18px;}
+.mlv_box label{ margin-right:17px;}
+.mlv_box label input{ vertical-align:middle; margin-right:5px;}
+.mlv_jh{ display:inline-block; width:65px; height:20px; line-height:20px; text-align:center; border-radius:4px; border:1px solid #DDDDDD;color:#666666;font-size:12px; font-family:"simsun"; margin-left:20px;}
+.mlv_jh:hover{ background:#F5F5F5;color:#666666; text-decoration:none;}
+.mlv_icon_new{ display:inline-block; background-position:0px 0px; width:30px; height:19px; position:absolute;top:-6px; right:-30px;}
+.mlv_box_pay{color:#BBBBBB;font-size:14px; font-family:"simsun";}
+.mlv_box .mdot_line{ margin-top:18px;}
+.mlv_p{ margin-top:11px;color:#666666;font-size:12px; font-family:"simsun";}
+.mlv_p span{color:#333333;}
+.mlv_pay_step{ overflow:hidden;zoom:1; margin:12px 0 20px 0;}
+.mlv_pay_step dd{float:left;}
+.mlv_pay_step dd span{color:#666666;font-size:12px; font-family:"simsun"; border-radius:25px; height:24px; line-height:24px; text-align:center; background:#EEEEEE; display:inline-block; padding:0 20px;}
+.mlv_pay_step .mlv_icon_step{ display:inline-block; background-position:0px -98px; width:5px; height:9px; margin:0 7px;}
+.mlv_box_pay .mlv_box_pay{color:#333333; font-weight:bold;}
+.mlv_box_pay .mlv_box_pay{ float:left;}
+.mlv_cgzf{color:#333333;font-size:12px; font-family:"simsun"; float:left; display:inline; margin-left:28px;}
+.mlv_cgzf span{color:#FF6600; font-weight:bold; font-size:14px; font-family:"Arial"; padding:0 4px;}
+.mlv_bt_shm{ float:left; display:inline; margin-left:17px; position:relative; z-index:3;}
+.mlv_bt_shm .mlv_icon_shm{ width:14px; height:14px; background-position:-56px -44px; float:left; margin-right:5px; margin-top:4px;}
+.mlv_bt_shm .mlv_btsm{border-bottom:1px dashed #999999; line-height:14px; cursor:pointer; display:inline-block;font-size:12px;font-family:"simsun";color:#999999;}
+.mlv_box .mlv_paynewbox1{ margin-top:7px; height:36px;}
+.mlv_box .mlv_paynewbox2{margin-top:7px;}
+.mlv-box-text{ display:inline-block;color:#BBBBBB; margin-left:30px;+display:inline;+zoom:1;}
+
+.mlv_box_pay .dot_line{ padding-top:17px; margin-bottom:14px;}
+.paynew .mlv_payBox{border:3px solid #ffffff; padding:15px 20px 0 16px}
+
+.mm_pword{display: none;width: 192px;border:1px solid #CCCCCC;padding:10px;position: absolute; top: 30px; left: 20px;background: #FFFFFF; z-index:2;}
+.mm_pword p{color: #666666;font-size: 12px; font-family: "simsun";line-height: 20px;}
+.mm_pword .mm_arrow{top: -8px; left: 25px;}
+.mm_pword .mm_arrow i{top: 1px; left: 0px;}
+.mm_arrow{display:block; width:16px; height:14px; position:absolute; left:-7px; top:20px;}
+.mm_arrow span,.mm_arrow i{ position:absolute; color:#eee; display:block; line-height:14px; font-size:14px;}
+.mm_arrow span{color: #CCCCCC;}
+.mm_arrow i{ color:#ffffff;top: 0px; left: 1px;}
+.mlv_total-price{ float:right;color:#333333; display:none;}
+.mlv_total-price strong{}
+.mlv_dot_line{ border-bottom:1px dashed #ddd;}
+.mlv_dot_line2{-border-bottom:1px dashed #ffffff;}
+
+.paytips{}
+.mlv_paynewbox{ height:36px;}
+
+.paynew .mlv_pay_tend{border:3px solid #99BBDD;}
+.mlv_pay_fenqi{ display:none;}
+.mlv_fenqi{ overflow:hidden;zoom:1; margin-left:-28px; margin-top:25px; padding-left:10px;}
+.mlv_fenqi li{ float:left; display:inline; margin-left:33px;}
+.mlv_fenqi .mlv_fenqi_tips{width:133px; height:38px;border:1px solid #DDDDDD; padding:0 9px 0 8px; position:relative; cursor:pointer;}
+.mlv_fenqi li span{float:left; color:#333333;font-size: 14px; font-family: "simsun"; display:inline; width:42px; text-align:center; line-height:36px; font-weight:bold;}
+.mlv_fenqi li em{float:left;color:#666666;font-size: 12px; font-family: "simsun";display:inline; width:88px; text-align:center;border-left:1px solid #DDDDDD; height:13px; line-height:13px; margin-top:14px;}
+.mlv_fenqi .mlv_fenqi_fcous{ box-shadow:0px 0px 0px 2px #FF9E0C inset;border:none; width:135px; height:40px;}
+
+.mlv_fcous_tuj{ display:block;background-position:-40px -60px; width:30px; height:30px; position:absolute;top:0px; right:0px;}
+.mlv_mian{ overflow:hidden; line-height:17px;color:#666666;font-size: 12px; font-family: "simsun"; padding-top:5px;}
+.mlv_icon_mian{ background-position:-20px -43px; width:18px; height:17px; display:inline-block; vertical-align:middle;}
+.mlv_fqpay{color:#333333; font-size:12px; font-family:"simsun"; padding-left:6px; margin-top:14px;}
+.mlv_fqpay span{color:#FF6600;font-size:12px; font-family:"Arial";}
+.mlv_fq_yzm{color:#333333;font-size:12px; font-family:"simsun"; padding-left:9px; margin-top:15px; margin-bottom:30px; overflow:hidden;zoom:1;}
+.mlv_fq_yzm input{color:#999999;font-size:12px; font-family:"simsun"; width:137px; height:28px; border:1px solid #9AA9B8; padding:0 5px; vertical-align:middle; float:left; display:inline; margin-right:10px;}
+.mlv_fq_yzm a{ float:left; width:89px; height:28px; line-height:28px; border:1px solid #DDDDDD; text-align:center; border-radius:4px; background:#FDFDFD;color:#666666;font-size:12px; font-family:"Arial";}
+.mlv_fq_yzm a:hover{ text-decoration:none;}
+.mlv_fq_yzm .mlv_chf{ background:#F5F5F5;}
+.mlv_fq_yzm .mlv_chf em{font-style: normal;color: #FF6600;font-size: 14px; font-family: "Arial";}
+
+.mlv_fq_yzm .mlv_icon_shj{ display:inline-block; width:14px; height:14px; background-position:-38px -44px; vertical-align:middle; margin:0px 4px 0px 10px;}
+.mlv_fq_buy{ height:76px; background:#F0F5FC; width:994px; margin-left:-16px; overflow:hidden;zoom:1; border-top:#99BBDD 1px solid;}
+.mlv_fq_buy a{ float:left; display:inline; width:116px; height:36px; line-height:36px; text-align:center; background:#FF8800;color:#FFFFFF; font-size:16px;font-family: "microsoft yahei"; border-radius:4px; margin:20px 0 0 24px;}
+.mlv_fq_buy a:hover{ text-decoration:none; background:#FF6803;}
+.mlv_amount{ float:left;color:#999999;font-size:12px; font-family:"simsun"; margin:27px 0 0 10px;}
+.mlv_amount span{color:#FF6600;}
+
+.mlv_cur .mlv_fenqi_tips{ border:2px solid #FF9E0C;  width:131px; height:36px;}
+.mlv_cur .mlv_fcous_tip{ display:block; background-position:0 -42px; width:16px; height:17px; position:absolute; bottom:-1px; right:0px;}
+.pay-price{ height:54px; line-height:54px; padding-left:20px;} 
+
+.mlv_paynew_box{ border:1px solid #CCCCCC; padding:38px 122px 50px 126px;}
+.mlv_pay_success{}
+.mlv_pay_success .mlv_icon_true{ float:left; width:32px; height:32px; background-position:0px -138px;margin-left:-46px;}
+.mlv_pay_success h3{ height:32px; line-height:32px;font-size:24px; font-family:"simsun";color:#333333;}
+.mlv_pay_pzh{font-size:14px; padding-top:20px; padding-bottom:16px;}
+.mlv_pay_pzh p{font-size:12px; -font-family:"simsun"; padding-top:8px;}
+.mlv_pzh_link{color:#0088CC; padding:0 5px;font-size:12px; font-family:"simsun";}
+.mlv_debt{ overflow:hidden;zoom:1; border-top:1px dashed #DDDDDD; padding-top:15px; margin-bottom:64px;}
+.mlv_debt p{color:#333333;font-size:12px; -font-family:"simsun"; line-height:28px;}
+.mlv_debt p span{ font-size:12px; font-family:"Arial";color:#FF0000; font-weight:bold;}
+.mlv_link{ padding-left:12px;}
+.mlv_ma{}
+
+.mlv_icon_error{ display:inline-block; width:14px; height:14px; vertical-align:middle; margin:0px 4px 0px 10px; background-position:0px -62px;}
+
+
+.windowBg{position: absolute; top: 0px; left: 0px; width: 100%; opacity: 0.5; z-index: 998; height: 1539px; background: rgb(153, 153, 153);}
+.winloading{width:221px; height:46px;  font-size:14px; color:#666; background:#fff; border:#999 solid 1px; z-index:999; position:fixed; top:50%; margin-top:-50px; left:50%; margin-left:-150px; padding:20px 27px 20px 20px;}
+.winloading img{ float:left;}
+.winloading p{float:left; display:inline; margin-left:18px; font-family:"simsun"; line-height:44px;}
+.mlv-load{color:#333333;font-size:14px; }
+.mlv-load-text{color:#999999;font-size:12px;}
+
+/*2016-05-05 By Niuchen 支付页面---添加信用卡分期*/
+.credit-stages .bank-list .bank{
+    padding: 5px 8px;
+    background: url(../../image/bank-big.png) no-repeat 8px 5px;
+    width: 216px;
+    height: 26px;
+}
+.wrap .credit-stages .bank-list li{
+    height: 54px;
+}
+.credit-stages .xhcontent{
+    position: relative;
+}
+.credit-stages .xhcontent ul{
+    padding: 2px 0px 1px;
+}
+.credit-stages-con{
+    padding: 1px 20px 0px 10px;
+    border: 1px solid #e3e3e3;
+    width: 910px;
+    position: relative;
+}
+.credit-stages-con .tip-icon-arrow{
+    width: 0;
+    height: 0;
+    border-style: dashed solid solid solid;
+    border-width: 0px 6px 6px 6px;
+    border-color: transparent transparent #e3e3e3 transparent;
+    position: absolute;
+    left: 70px;
+    top: -6px; 
+}
+.credit-stages-con .tip-icon-arrow b{
+    width: 0;
+    height: 0;
+    border-style: dashed solid solid solid;
+    border-width: 0px 5px 5px 5px;
+    border-color: transparent transparent #fff transparent;
+    position: absolute;
+    left:-5px;
+    top: 1px; 
+}
+.credit-stages-con li{
+   line-height: 23px;
+   font-family: "simsun",sans-serif;
+   font-size: 12px;
+   color: #666;
+   padding: 3px 0px 3px 7px;
+}
+.credit-stages-con li b{
+    font-family: "Arial",sans-serif;
+    font-weight: normal;
+}
+.credit-stages .credit-stages-con li input[type="radio"]{
+    vertical-align: middle;
+}
+.credit-stages-con-tip{
+    padding: 10px 0px 10px 7px;
+    border-top: 1px dashed #ccc;
+    font-family: "simsun",sans-serif;
+    font-size: 12px;
+    color: #333;
+    line-height: 24px;
+    margin-top: 9px;
+}
+.tip-icon-tips{
+    display: inline-block;
+    *display: inline;
+    *zoom:1;
+    width: 14px;
+    height: 14px;
+    background: url(../../image/bank-big.png) no-repeat 0px -36px;
+    margin-right: 5px;
+    vertical-align: middle;
+}

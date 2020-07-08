@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.Advertising_classifyMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+	
+	<resultMap type="com.znsd.tubaba.entity.AdvertisingClassify" id="adverResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="upid" property="upid"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	
+	<!-- 查询所有的广告分类 -->
+	<select id="queryAll" resultMap="adverResultMap">
+		select * from advertising_classify
+	</select>
+	
+	<!-- 按/名字查询分类 -->
+	<select id="queryOneader" parameterType="String" resultType="Integer">
+		select count(*) from advertising_classify where name=#{name}
+	</select>
+	
+	<!-- 广告分类的增加 -->
+	<insert id="addAdver" parameterType="com.znsd.tubaba.entity.AdvertisingClassify">
+		INSERT INTO advertising_classify(name,upid) VALUE(#{name},#{upid})
+	</insert>
+	
+	<!-- 查询广告分类是否在广告表中有数据 -->
+	<select id="queryatredId" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM `advertising_classify`  WHERE id IN(SELECT `adverclasId` FROM`advertising` WHERE `adverclasId`=#{adverclasId})
+	</select>
+	
+	<!-- 删除广告分类（修改状态 0为正常 1为已删除） -->
+	<update id="deletAdver">
+		UPDATE `advertising_classify` SET `type`=#{arg0}  WHERE id=#{arg1}
+	</update>
+	
+	<!-- 根据id获取单个对象 -->
+	<select id="queryOneId"  parameterType="int" resultType="com.znsd.tubaba.entity.AdvertisingClassify">
+		select * from advertising_classify where id=#{id}
+	</select>
+	
+	<!-- 修改广告分类 -->
+	<update id="updateAdver" parameterType="com.znsd.tubaba.entity.AdvertisingClassify">
+		update advertising_classify set name=#{name},upid=#{upid} where id=#{id}
+	</update>
+</mapper>

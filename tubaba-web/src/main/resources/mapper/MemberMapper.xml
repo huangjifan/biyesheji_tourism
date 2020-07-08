@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.MemberMapper">
+	<resultMap type="com.znsd.tubaba.entity.Member" id="memberMapper">
+	    <id property="id" column="id"/>
+	    <result property="name" column="name"/>
+	    <result property="minIntegral" column="minIntegral" />
+	    <result property="maxIntegral" column="maxIntegral" />
+ 	</resultMap>
+ 	
+ 	<!-- 查询所有会员 -->
+ 	<select id="findByAll" resultMap="memberMapper">
+ 		select * from member order by minIntegral
+ 	</select>
+</mapper>

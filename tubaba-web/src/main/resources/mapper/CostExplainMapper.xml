@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.CostExplainMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="CostExplain" id="costExplainMap">
+		<!-- 主键 -->
+		<id property="id" column="id"/>
+		<!-- 内容 -->
+		<result property="content" column="content"/>
+		<!-- 单价 -->
+		<result property="price" column="price"/>
+		<!-- 数量 -->
+		<result property="number" column="number"/>
+		<!-- 费用信息 -->
+
+	</resultMap>
+	
+	<!-- 增加费用详细说明 -->
+	<insert id="addCostExplain" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO costexplain(content,price,number,costId)
+		VALUES(#{content},#{price},#{number},#{cost.id})
+	</insert>
+	<!-- 批量增加费用详细说明 -->
+	<insert id="batchAddCostExplain">
+		INSERT INTO costexplain(content,price,number,costId)
+		VALUES
+		<foreach collection="costExplains" item="costExplain" separator=",">
+			(#{costExplain.content},#{costExplain.price},#{costExplain.number},#{costExplain.cost.id})
+		</foreach>
+	</insert>
+</mapper>

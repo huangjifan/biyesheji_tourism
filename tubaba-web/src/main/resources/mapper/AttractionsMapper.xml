@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.AttractionsMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="com.znsd.tubaba.entity.Attractions" id="attrResultMap">
+		<id property="atid" column="atid"/>
+		<result property="type" column="type"/>
+		<result property="atrtitle" column="atrtitle"/>
+		<result property="apid" column="apid"/>
+	</resultMap>
+	
+	<select id="queryAttr" resultMap="attrResultMap">
+		select * from attractions
+	</select>
+	
+	<select id="queryOneId" resultMap="attrResultMap">
+		select * from attractions where atid = #{atid}
+	</select>
+	
+	<select id="queryCont" parameterType="String" resultType="Integer">
+		select count(*) from attractions where atrtitle=#{atrtitle}
+	</select>
+	
+	<insert id="addTitl" parameterType="com.znsd.tubaba.entity.Attractions" >
+		INSERT INTO attractions(atrtitle) VALUES(#{atrtitle})
+	</insert>
+</mapper>

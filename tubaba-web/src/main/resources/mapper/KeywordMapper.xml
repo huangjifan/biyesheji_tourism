@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.KeywordMapper">
+	<resultMap type="com.znsd.tubaba.entity.Keyword" id="keywordResultMap">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="type" column="type"/>
+	</resultMap>
+	
+	<!-- /**
+	 * 查询所有的关键字
+	 * 返回关键字信息的list，如果没有，返回空
+	 * */ -->
+	<select id="queryAll" resultMap="keywordResultMap">
+		select * from keyword
+	</select>
+</mapper>

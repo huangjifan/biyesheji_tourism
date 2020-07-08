@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.NavMapper">
+	
+	<resultMap type="com.znsd.tubaba.entity.Nav" id="navRestulMap">
+		<id property="id" column="id"/>
+		<result property="nname" column="nname"/>
+		<result property="iconCla" column="iconCla"/>
+		<result property="pid" column="pid"/>
+		<result property="url" column="url"/>
+		<result property="state" column="state"/>
+	</resultMap>
+	
+	<select id="queryNav" resultMap="navRestulMap">
+		select * from nav
+	</select>
+	
+	<select id="queryAdminNav" resultMap="navRestulMap">
+		SELECT * FROM nav WHERE pid IN 
+		(SELECT nid FROM permissions WHERE identity = #{adminId})
+		OR id IN
+		(SELECT nid FROM permissions WHERE identity = #{adminId})
+	</select>
+</mapper>

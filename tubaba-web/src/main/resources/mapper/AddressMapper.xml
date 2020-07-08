@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.AddressMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="com.znsd.tubaba.entity.Address" id="addressMapper">
+	    <id property="id" column="id"/>
+	    <result property="area" column="area"/>
+	    <result property="area_pinyin" column="area_pinyin"/>
+	    <result property="upid" column="upid"/>
+ 	</resultMap>
+ 	<!-- 通过产品分类id查询旅游景点的热门出发城市 -->
+	<select id="findScenicwayHotCityByAttractionsId" resultMap="addressMapper">
+		SELECT ads.* FROM indentdetails itds 
+			INNER JOIN scenicway sy ON itds.scenicwayId = sy.id
+			INNER JOIN address ads ON  (AREA LIKE CONCAT('%',startpath,'%'))
+		WHERE 
+		sy.attractionsId IN (
+		SELECT atid FROM attractions
+		WHERE #{attractionsId} IN(atid,apid)
+		)
+		GROUP BY startpath
+		ORDER BY COUNT(0) DESC
+	</select>
+ 	<!-- 查询指定省份下的所有城市 -->
+	<select id="queryProvincesSubCity" resultMap="addressMapper">
+		SELECT * FROM address WHERE upid in(
+		<foreach collection="provs" item="lt" separator=",">
+		#{lt}
+		</foreach>
+		)
+	</select>
+	<!-- 查询所有省份和城市 -->
+	<select id="queryAddressAll" resultMap="addressMapper">
+		select * from address 
+	</select>
+	<!-- 根据id查询省份或者城市 -->
+	<select id="queryAddressById" parameterType="String" resultType="String">
+		SELECT `area` FROM address WHERE id = #{id}
+	</select>
+	<!-- 通过地区名称或地区名称的拼音搜索地址信息 -->
+	<select id="queryAddressByAreaOrArea_pinyin" resultMap="addressMapper">
+		SELECT * FROM address
+		<where>
+			<if test="area != null and area != ''">
+				and area LIKE CONCAT('%',#{area},'%')
+			</if>
+			<if test="area_pinyin != null and area_pinyin != ''">
+				and area_pinyin LIKE CONCAT('%',#{area_pinyin},'%')
+			</if>
+			<!-- AND upid != 0 -->
+		</where>
+	</select>
+	<!-- 查询所有的城市 -->
+	<select id="queryCityAll" resultMap="addressMapper">
+		SELECT * FROM address WHERE upid != 0 
+	</select>
+</mapper>

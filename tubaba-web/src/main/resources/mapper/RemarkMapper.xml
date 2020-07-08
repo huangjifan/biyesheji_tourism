@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.RemarkMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="Remark" id="remarkMap">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="essence" column="essence"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<resultMap type="Remark" id="remarkMapTwo">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="essence" column="essence"/>
+		<result property="status" column="status"/>
+		<association property="mark" column="markid" select="com.znsd.tubaba.mapper.MarkMapper.queryOne"></association>
+		<association property="user" column="userid" select="com.znsd.tubaba.mapper.UserMapper.findById"></association>
+		<collection property="remarkimg" column="id" select="com.znsd.tubaba.mapper.RemarkImgMapper.queryByMarkId"></collection>
+		<collection property="remarks" column="id" select="com.znsd.tubaba.mapper.RemarkMapper.queryRemId"></collection>
+		<collection property="remlike" column="id" select="com.znsd.tubaba.mapper.RemarklikeMapper.queryByremaid"></collection>
+	</resultMap>
+	
+	<!-- 通过旅游路线编号或景点编号查询评论信息 -->
+	<select id="queryRemarkByScenicwayIdOrScenicId" resultMap="remarkMapTwo">
+		SELECT rk.* FROM remark rk
+			LEFT JOIN indent it ON it.id = rk.indentid
+			LEFT JOIN indentdetails itds ON itds.id = it.indentdetailsId
+		<where>
+			<if test="scenicwayId != null and scenicwayId != ''">
+				and itds.scenicwayId = #{scenicwayId}
+			</if>
+			<if test="scenicId != null and scenicId != ''">
+				and itds.scenicId = #{scenicId}
+			</if>
+		</where>
+	</select>
+	<!-- 增加评论 -->
+	<insert id="addRemark" parameterType="com.znsd.tubaba.entity.Remark" useGeneratedKeys="true" keyProperty="id">
+		insert into remark(content,userid,indentid) value(#{content},#{user.id},#{indent.id})
+	</insert>
+	<!-- 增加评论 -->
+	<insert id="addRemark2" parameterType="com.znsd.tubaba.entity.Remark" useGeneratedKeys="true" keyProperty="id">
+		insert into remark(content,userid,markid,indentid) value(#{content},#{user.id},#{mark.id},#{indent.id})
+	</insert>
+	<!-- 通过用户id和订单查询单个信息 -->
+ 	<select id="queryById" resultType="int">
+ 		select count(*) from remark where indentid=#{arg0} and userid=#{arg1} 
+ 	</select>
+ 	
+ 	<!-- 连表查询  查询指定景点的评论 -->
+ 	<select id="queryScenicId" resultMap="remarkMapTwo">
+ 		SELECT * FROM remark  WHERE indentid IN (SELECT i.id FROM `indent` i JOIN indentdetails d ON i.indentdetailsId=d.id WHERE d.scenicid=#{arg0}) and remid=0
+ 	</select> 
+ 	
+ 	<!-- 查询回复评论 -->
+ 	<select id="queryRemId" resultMap="remarkMapTwo" parameterType="int">
+ 		SELECT * FROM remark WHERE remid=#{remid}
+ 	</select>
+ 	
+ 	<!-- 连表查询  查询指定景点的评论 是否加精 -->
+ 	<select id="queryScenicIdessence" resultMap="remarkMapTwo">
+ 		SELECT * FROM remark  WHERE indentid IN (SELECT i.id FROM `indent` i JOIN indentdetails d ON i.indentdetailsId=d.id WHERE d.scenicid=#{arg0}) and remid=0 and essence=1
+ 	</select>
+ 	
+ 	<!-- 连表查询  查询指定景点的评论 是否加精的数量 -->
+ 	<select id="queryScenicIdessenceCount" resultType="int" >
+ 		SELECT count(*) FROM remark  WHERE indentid IN (SELECT i.id FROM `indent` i JOIN indentdetails d ON i.indentdetailsId=d.id WHERE d.scenicid=#{arg0}) and remid=0 and essence=1
+ 	</select>
+ 	
+ 	<!-- 连表查询  查询指定景点的评论 只查询有图的评论-->
+ 	<select id="queryRemarkImg" resultMap="remarkMapTwo">
+	 	SELECT r.* FROM remark r RIGHT JOIN remarkimg m ON m.remarkid=r.id 
+		WHERE r.indentid IN ( SELECT i.id FROM `indent` i  JOIN indentdetails d ON i.indentdetailsId=d.id  WHERE d.scenicid=#{arg0}) 
+		GROUP BY r.id
+ 	</select>
+ 	
+ 	<!-- 连表查询  查询指定景点的评论 只查询有图的评论数量-->
+ 	<select id="queryRemarkImgCount" resultType="int">
+	 	SELECT COUNT(1) FROM (SELECT r.* FROM remark r RIGHT JOIN remarkimg m ON m.remarkid=r.id 
+		WHERE r.indentid IN ( SELECT i.id FROM `indent` i  JOIN indentdetails d ON i.indentdetailsId=d.id  WHERE d.scenicid=#{arg0}) 
+		GROUP BY r.id) s
+ 	</select>
+ 	
+ 	
+ 	<insert id="addCommit" parameterType="com.znsd.tubaba.entity.Remark">
+ 		insert into remark(content,userid,remid) value(#{content},#{user.id},#{remid})
+ 	</insert>
+ 	
+ 	<!-- 查询点评数量 -->
+ 	<select id="queryRmarkCont" resultType="int">
+ 		SELECT count(*) FROM remark  WHERE indentid IN (SELECT i.id FROM `indent` i JOIN indentdetails d ON i.indentdetailsId=d.id WHERE d.scenicid=#{arg0}) and remid=0
+ 	</select>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.CoustomizeMapper">
+	<resultMap type="com.znsd.tubaba.entity.Coustomize" id="customizsMap">
+		<id property="id" column="id"/>
+		<result property="startcity" column="startcity"/> 
+		<result property="endcity" column="endcity"/>
+		<result property="starttime" column="starttime"/>
+		<result property="endtime" column="endtime"/>
+		<result property="people" column="people"/>
+		<result property="budget" column="budget"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="name" column="name"/>
+		<result property="state" column="state"/>
+		<result property="username" column="username"/>	
+		<result property="ordernumber" column="ordernumber"/>	
+	</resultMap>
+	<select id="queryAll" resultMap="customizsMap">
+		SELECT * FROM customize where customize.`state`=0
+	</select>
+	
+	<select id="queryOneId" resultMap="customizsMap">
+		SELECT * FROM customize where
+		customize.`id`=#{id}
+	</select>
+	
+	<select id="queryOneName" resultMap="customizsMap">
+		SELECT * FROM customize where customize.`state`=0 and
+		customize.`username`=#{username}
+	</select>
+	
+	<insert id="addCoustomize" parameterType="com.znsd.tubaba.entity.Coustomize">
+		insert into customize(
+			startcity,
+			endcity,
+			starttime,
+			endtime,
+			people,
+			budget,
+			email,
+			phone,
+			state,
+			name,
+			username,
+			ordernumber
+		)values(
+			#{startcity},
+			#{endcity},
+			#{starttime},
+			#{endtime},			
+			#{people},
+			#{budget},
+			#{email},
+			#{phone},
+			0,
+			#{name},
+			#{username},
+			#{ordernumber}
+		)
+	</insert>	
+	
+	<update id="delCustomize" parameterType="com.znsd.tubaba.entity.Coustomize">
+		update customize set state=1 where id=#{id} 
+	</update>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.MySpaceTripMapper">
+	<!-- 开启二级缓存 -->
+	<!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache" /> -->
+	<resultMap type="com.znsd.tubaba.entity.Travel" id="travelMapper">
+		<id property="id" column="id" />
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="time" column="time"/>
+		<result property="userid" column="userid"/>
+		<result property="coverimg" column="coverimg"/>
+		<result property="indentid" column="indentid"/>
+		<collection property="travelCommon" column="id" select="com.znsd.tubaba.mapper.MySpaceTripMapper.selectCommonCount" />
+		<collection property="travelLike"  column="id" select="com.znsd.tubaba.mapper.MySpaceTripMapper.selectLikeCount" />
+		<collection property="user" column="userid" select="com.znsd.tubaba.mapper.MySpaceTripMapper.selectUserName" />
+	</resultMap>
+	<!-- 根据用户id查询游记 -->
+	<select resultMap="travelMapper" id="myTrip">
+		select * from travel where userid=#{param1} ORDER BY id DESC
+	</select>
+	<!-- 查询游记评论数量 -->
+	<select id="selectCommonCount" parameterType="int" resultType="com.znsd.tubaba.entity.TravelCommon">
+		select * from travelcommon where travelid=#{travelid}
+	</select>
+	<!-- 查询游记点赞数量 -->
+	<select id="selectLikeCount" parameterType="int" resultType="com.znsd.tubaba.entity.TravelLike">
+		SELECT * FROM travellike WHERE travelid=#{travelid}
+	</select>
+	<!-- 根据游记id查询用户信息 -->
+	<select id="selectUserName" parameterType="int" resultMap="com.znsd.tubaba.mapper.UserMapper.userMapper">
+		select * from user where id=#{userid}
+	</select>
+	<!-- 增加游记 -->
+	<insert id="addWrite" parameterType="com.znsd.tubaba.entity.Travel">
+		INSERT INTO travel(title,content,`time`,userid) VALUES(#{title},#{content},#{time},#{userid});
+	</insert>
+	<!-- 增加有归属订单的游记 -->
+	<insert id="addWriteAndIndent" parameterType="com.znsd.tubaba.entity.Travel">
+		INSERT INTO travel(indentid,title,content,`time`,userid) VALUES(#{indentid},#{title},#{content},#{time},#{userid});
+	</insert>
+	<!-- 删除游记 -->
+	<delete id="delTravel" parameterType="int">
+		delete from travel where id=#{id}
+	</delete>
+	<!-- 根据游记id删除评论 -->
+	<delete id="delCommonById" parameterType="int">
+		delete from travelcommon where travelid=#{param1}
+	</delete>
+	<!-- 根据游记id删除点赞 -->
+	<delete id="delLikeById" parameterType="int">
+		delete from travellike where travelid=#{param1}
+	</delete>
+	<!-- 根据游记id查询游记 -->
+	<select id="selectTravelById" resultMap="travelMapper">
+		select * from travel where id=#{id}
+	</select>
+	<!-- 修改游记 -->
+	<update id="alterTravel" parameterType="com.znsd.tubaba.entity.Travel">
+		update travel set title=#{title},content=#{content},time=#{time} where id=#{id}
+	</update>
+	<!-- 查询未写游记的订单 -->
+	<select id="notWriteTravel" resultMap="com.znsd.tubaba.mapper.IndentMapper.indentMapper">
+		SELECT * FROM indent a INNER JOIN indentdetails b ON a.indentdetailsId=b.id WHERE a.id NOT IN (SELECT indentid FROM travel WHERE indentid IS NOT NULL) AND indentdetailsId IN (SELECT id FROM indentdetails WHERE userid=#{id})
+	</select>
+	<!-- 增加游记浏览数量 -->
+	<select id="travelViews" parameterType="int">
+		UPDATE travel SET views = views+1 where id=#{id}
+	</select>
+	<!-- 查询用户是否点赞 -->
+	<select id="existZan" resultMap="travelMapper">
+		SELECT * FROM travel a INNER JOIN travellike b ON a.id=b.travelid WHERE b.userid=#{param1} AND b.travelid=#{param2}
+	</select>
+	<!-- 用户增加点赞 -->
+	<select id="addzan" parameterType="int">
+		INSERT INTO travellike(userid,travelid,likenum) VALUES (#{param1},#{param2},1)
+	</select>
+	<!-- 查询最新加的游记 -->
+	<select id="newTravel" resultMap="travelMapper">
+		SELECT * FROM travel ORDER BY id DESC LIMIT 1
+	</select>
+	<!-- 查询游记是否有封面 -->
+	<select id="isCoverImg" resultMap="travelMapper" parameterType="int">
+		SELECT * FROM travel WHERE id=#{id} AND coverimg IS NULL
+	</select>
+	<!-- 增加封面 -->
+	<select id="addCoverImg">
+		UPDATE travel SET coverimg = #{param1} WHERE id=#{param2}
+	</select>
+	
+	<!-- 指定订单的游记 -->
+	<select id="querybyIndentAll" resultMap="travelMapper">
+		SELECT t.* FROM `travel` t JOIN (
+		SELECT i.id FROM indent i JOIN (SELECT id FROM indentdetails WHERE scenicid=#{arg0}) t ON i.id=t.id
+		) s ON t.indentid=s.id
+	</select>
+	
+	<select id="querybyIndentAllCount" resultType="int">
+		SELECT COUNT(1) FROM (SELECT t.* FROM `travel` t JOIN (
+		SELECT i.id FROM indent i JOIN (SELECT id FROM indentdetails WHERE scenicid=#{arg0}) t ON i.id=t.id
+		) s ON t.indentid=s.id) s
+	</select>
+	<!-- 旅游攻略游记 -->
+	<select id="travelAll" resultMap="travelMapper">
+		SELECT * FROM travel ORDER BY views DESC
+	</select>
+	<!-- 游记推荐 -->
+	<select id="travelRecommend" resultMap="travelMapper">
+		SELECT * FROM travel a INNER JOIN (
+		SELECT travelid FROM travellike  GROUP BY travelid ORDER BY travelid DESC LIMIT 4
+		) b
+		ON a.id=b.travelid
+	</select>
+</mapper>

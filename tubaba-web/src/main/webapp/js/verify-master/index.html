@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+ 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+        <title>verify插件demo</title>
+        
+        <link rel="stylesheet" type="text/css" href="css/verify.css">
+    </head>
+ 
+    <body>
+    	<h1>verify</h1>
+    	<p>纯前端的验证码插件，大熊出品</p>
+    	
+    	<br><br>
+    	
+        
+        <div id="mpanel6" style="margin-top:50px;">
+        </div>
+        
+        
+        <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="js/verify.js" ></script>
+        
+        <script>
+        	
+		    $('#mpanel6').pointsVerify({
+		    	defaultNum : 4,	//默认的文字数量
+		    	checkNum : 2,	//校对的文字数量
+		    	vSpace : 5,	//间隔
+		    	imgName : ['1.jpg', '2.jpg'],
+		    	imgSize : {
+		        	width: '300px',
+		        	height: '100px',
+		        },
+		        barSize : {
+		        	width : '600px',
+		        	height : '40px',
+		        },
+		        ready : function() {
+		    	},
+		        success : function() {
+		        	alert('验证成功，添加你自己的代码！');
+		        },
+		        error : function() {
+		        	alert('验证失败！');
+		        }
+		    });
+		    
+        </script>
+    </body>
+ 
+</html>

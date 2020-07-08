@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.Activity_typeMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="com.znsd.tubaba.entity.Activity_type" id="activity_typeMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="state" column="state"/>
+		<!-- 
+		<result property="arithmeticid.id" column="idTest"/>
+		<result property="arithmeticid.arithmeticType" column="type"/>
+		<result property="arithmeticid.discount" column="discount"/>
+		<result property="arithmeticid.discountsMoney" column="discountsMoney"/>
+		<result property="arithmeticid.maxDiscountsMoney" column="maxDiscountsMoney"/>
+		<result property="arithmeticid.satisfyMoney" column = "satisfyMoney"/> 
+		-->
+		<!-- 活动算法信息 -->
+		<association property="arithmeticid" column="arithmeticid"
+			select="com.znsd.tubaba.mapper.Activity_arithmeticMapper.queryById"/>	
+	</resultMap>
+	<select id ="queryType" resultMap="activity_typeMap">
+		<!-- SELECT acttype.`id`,acttype.`name`,actarith.`id` as `idTest`,
+		actarith.`arithmeticType` as `type`,
+		actarith.`discount` as `discount`,
+		actarith.`discountsMoney` as `discountsMoney`,
+		actarith.`maxDiscountsMoney` as `maxDiscountsMoney`,
+		actarith.`satisfyMoney`as `satisfyMoney`
+		 FROM activity_type acttype
+ 		INNER JOIN activity_arithmetic actarith ON acttype.`arithmeticid`= actarith.`id`
+ 		where acttype.`state`=0 -->
+ 		select * from activity_type where state=0
+	</select>
+	
+	<select id ="queryTypeOne" resultMap="activity_typeMap">
+		<!-- SELECT acttype.`id`,acttype.`name`,actarith.`id` as `idTest`,
+		actarith.`arithmeticType` as `type`,
+		actarith.`discount` as `discount`,
+		actarith.`discountsMoney` as `discountsMoney`,
+		actarith.`maxDiscountsMoney` as `maxDiscountsMoney`,
+		actarith.`satisfyMoney`as `satisfyMoney`
+		 FROM activity_type acttype
+ 		INNER JOIN activity_arithmetic actarith ON acttype.`arithmeticid`= actarith.`id`
+ 		where acttype.`state`=0 and acttype.`id`=#{id} -->
+ 		select * from activity_type where id = #{id} and state=0
+	</select>
+	
+	<select id="countType" resultType="Integer">
+		select count(*) from activity_type where state = 0
+	</select>
+	
+	<insert id="addType" parameterType="com.znsd.tubaba.entity.Activity_type">
+		insert into activity_type(
+			name,
+			arithmeticid
+		)values(
+			#{name},
+			#{arithmeticid.id}
+		)
+	</insert>
+	
+	<update id="delActTyp" parameterType="com.znsd.tubaba.entity.Activity_type">
+		UPDATE activity_type SET state = 1  WHERE id = #{id}
+	</update>
+	
+</mapper>

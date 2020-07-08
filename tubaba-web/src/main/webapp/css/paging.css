@@ -1,0 +1,240 @@
+
+/*!
+ * paging.css 鍒嗛〉鏍峰紡
+ * Author Pandora
+**/
+
+/** @name      : 鍒嗛〉鏍峰紡
+  * @explain   : 瀹炵幇椤电爜
+  * @type      : 鍩虹被 .paging .pagebox
+  * @dependent : pandora
+  * @author    : CloudYan
+  * @version   : 1.0
+  * @other     : 閽堝鎸夐挳瀹炵幇鍋氬涓嬭鍒掞細
+  
+璇︾粏鍙傝锛歱andora鍓嶇椤圭洰/pandora/docs/modules/paging.html
+
+***/
+.paging {
+    font-family: "Arial", "PingFang SC", "Microsoft Yahei", "SimSun", sans-serif;;
+}
+
+.paging {
+    clear: both;
+    margin: 10px 0;
+    height: 26px;
+    overflow: hidden;
+    text-align: right;
+    line-height: 26px;
+    font-size: 12px;
+}
+.gopage {
+    float: right;
+    display: inline;
+    padding-left: 6px;
+    line-height: 26px;
+}
+
+.paging .input-text{
+    width: 22px;
+    margin: 0 3px;
+    padding: 2px 3px;
+    *padding: 1px 3px;
+	border:1px solid #ccc;
+	line-height:20px;
+	outline:none;
+	-webkit-box-shadow:inset 2px 2px 2px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow:inset 2px 2px 2px rgba(0, 0, 0, 0.075);
+	shadow:inset 2px 2px 2px rgba(0, 0, 0, 0.075);
+}
+.gopage .input-text,
+.gopage .btn {
+    vertical-align: top;
+    *vertical-align: middle;
+    margin-right: 0;
+}
+
+/* 椤电爜閮ㄥ垎 */
+.pagebox .num {
+    color: #f90;
+}
+.pagebox {
+    text-align: right;
+}
+.pagebox a,
+.pagebox span {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 0 10px;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    vertical-align: top;
+    background: #fff;
+    color: #666;
+}
+.pagebox span.pagesel{
+    border-color: transparent;
+}
+.pagebox a:hover {
+    text-decoration: none;
+    border-color: #aaa;
+    background: #e3e3e3;
+    color: #333;
+}
+.pagebox .pageinfo,
+.pagebox .pagemore {
+    border: none;
+    padding: 0 6px;
+}
+.pagebox .prevpage,
+.pagebox .nextpage {
+    position: relative;
+}
+.pagebox .prevpage {
+    text-align: right;
+    padding: 0 8px 0 10px;
+}
+.pagebox .nextpage {
+    text-align: left;
+    padding: 0 10px 0 8px;
+}
+.pagebox span.prevpage,
+.pagebox span.nextpage {
+    color: #ccc;
+    border: 1px solid #ddd;
+    cursor: default;
+}
+
+.pagebox .prevpage .larr,
+.pagebox .nextpage .rarr {
+    display: inline-block;
+    position: relative;
+    top: 7px;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+    border-width: 5px;
+    border-style: solid;
+    _border-style: dashed;
+    border-color: transparent;
+}
+.pagebox .prevpage .larr {
+    float: left;
+    margin-right: 4px;
+    _border-right-style: solid;
+    border-left-width: 0;
+    border-right-color: #999;
+}
+.pagebox .nextpage .rarr {
+    float: right;
+    margin-left: 4px;
+    _border-left-style: solid;
+    border-right-width: 0;
+    border-left-color: #999;
+}
+/* 淇IE7- 涓嬪唴閮ㄥ厓绱爁loat:right寮曡捣鐨刡ug */
+.pagebox .nextpage {
+    *padding:0 17px 0 10px;
+}
+.pagebox .nextpage .rarr {
+    *margin-left: 0;
+    *float: none;
+    *position: absolute;
+    *right: 10px;
+}
+
+.pagebox a.prevpage:hover .larr {
+    border-right-color: #666;
+}
+.pagebox a.nextpage:hover .rarr {
+    border-left-color: #666;
+}
+.pagebox span.prevpage .larr {
+    border-right-color: #cccccc;
+}
+.pagebox span.nextpage .rarr {
+    border-left-color: #cccccc;
+}
+
+/* 灏哄 */
+.paging-big {
+    height: 30px;
+    line-height: 30px;
+}
+.paging-big .input-text{
+    width: 24px;
+    margin: 0 2px;
+    padding: 4px 6px;
+}
+.paging-big .pagebox a,
+.paging-big .pagebox span {
+    padding: 0 12px;
+    height: 28px;
+    line-height: 28px;
+}
+.paging-big .prevpage .larr,
+.paging-big .nextpage .rarr {
+    top: 9px;
+}
+
+/* 钃濊壊 */
+.bluestyle .pagesel {
+    font-weight: bold;
+    color: #333;
+}
+.bluestyle a {
+    color: #666;
+}
+.bluestyle a:hover { 
+    border-color: #7FB4F5;
+    background: #fff;
+    color: #245DC1;
+}
+.bluestyle a.prevpage:hover .larr {
+    border-right-color: #538ED7;
+}
+.bluestyle a.nextpage:hover .rarr {
+    border-left-color: #538ED7;
+}
+
+/* 姗欓粍鑹�  */
+.orangestyle .pagesel {
+    font-weight: bold;
+    color: #fff;
+    border: 1px solid #f80;
+    background: #f80;
+}
+.orangestyle a:hover { 
+    border-color: #f80;
+    background: #fff;
+    color: #f80;
+}
+.orangestyle a.prevpage:hover .larr {
+    border-right-color: #f80;
+}
+.orangestyle a.nextpage:hover .rarr {
+    border-left-color: #f80;
+}
+
+/* 鐜孩鑹� */
+.pinkstyle .pagesel {
+    font-weight: bold;
+    border: 1px solid #df1a7a;
+    color: #fff;
+    background: #df1a7a;
+}
+.pinkstyle a:hover { 
+    border-color: #df1a7a;
+    background: #fff;
+    color: #df1a7a;
+}
+.pinkstyle a.prevpage:hover .larr {
+    border-right-color: #DF1A7A;
+}
+.pinkstyle a.nextpage:hover .rarr {
+    border-left-color: #DF1A7A;
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.ScenicwayDepartMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="ScenicwayDepart" id="scenicwayDepartMap">
+	    <id property="id" column="id"/>
+	    <result property="departtime" column="departtime"/>
+	    <result property="price" column="price"/>
+ 	</resultMap>
+	<!-- 通过旅游路线编号查询旅游路线出发时间信息 -->
+	<select id="queryScenicwayByCondition" resultMap="scenicwayDepartMap">
+		SELECT * FROM scenicway_depart
+		<where>
+			<if test="scenicwayId != null and scenicwayId != ''">
+				and scenicwayId = #{scenicwayId}
+			</if>
+			<if test="year != null and year != ''">
+				and YEAR(departtime) = #{year}
+			</if>
+			<if test="month != null and month != ''">
+				and MONTH(departtime) = #{month}
+			</if>
+		</where>
+	</select>
+	<select id="queryScenicwayById" resultMap="scenicwayDepartMap">
+		SELECT * FROM scenicway_depart where scenicwayId = #{scenicwayId}
+	</select>
+	
+	<delete id="deleteById">
+		DELETE 
+		FROM
+		  `scenicway_depart` 
+		WHERE `scenicwayId` = #{id} ;
+	</delete>
+	
+	<insert id="insertScenicwayById">
+		INSERT INTO `scenicway_depart` (
+		  `departtime`,
+		  `price`,
+		  `scenicwayId`
+		) 
+		VALUES
+		<foreach collection="list" item="scenicwayDepart" index="index" separator=",">
+			(
+			    #{scenicwayDepart.departtime},
+			    #{scenicwayDepart.price},
+			    #{scenicwayDepart.scenicway.id}
+			  )
+		</foreach>
+	</insert>
+</mapper>

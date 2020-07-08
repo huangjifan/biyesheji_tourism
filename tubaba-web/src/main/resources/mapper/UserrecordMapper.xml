@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.UserrecordMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	<resultMap type="com.znsd.tubaba.entity.Userrecord" id="userrecordMapper">
+		<id property="id" column="id"/>
+		<result property="operation" column="operation"/>
+		<result property="operationTime" column="operationTime"/>
+		<result property="money" column="money"/>
+		<result property="paymentAccount" column="paymentAccount"/>
+		<result property="paymentStatus" column="paymentStatus" />
+		<association property="user" fetchType="lazy" column="userId" select="com.znsd.tubaba.mapper.UserMapper.findById" />
+	    <association property="indent" fetchType="lazy" column="indentId" select="com.znsd.tubaba.mapper.IndentMapper.findByIndentId" />
+	</resultMap>
+	
+	<!-- 通过用户id和状态查询用户纪录 -->
+	<select id="findByUserIdAndOperation" resultMap="userrecordMapper">
+		select * from userrecord where userId = #{userId} and operation = #{operation} order by id desc
+	</select>
+	
+	<!-- 查询用户充值金额 -->
+	<select id="findByUserIdMoney" resultType="int">
+		select IFNULL(SUM(money),0) from userrecord where userId = #{userId} and operation = #{operation}
+	</select>
+	
+
+	<insert id="insertUserrecord">
+		INSERT INTO `db_tubaba`.`userrecord` (
+		  `userId`,
+		  `operation`,
+		  `operationTime`,
+		  `money`,
+		  `indentId`,
+		  `paymentAccount`,
+		  `paymentStatus`
+		) 
+		VALUES
+		  (
+		    #{user.id},
+		    #{operation},
+		    #{operationTime},
+		    #{money},
+		    #{indent.id},
+		    #{paymentAccount},
+		    #{paymentStatus}
+		  ) ;
+	</insert>
+</mapper>

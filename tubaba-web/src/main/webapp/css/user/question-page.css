@@ -1,0 +1,334 @@
+@charset "utf-8";
+.question-content {
+  width: 958px;
+  padding: 40px 120px 110px;
+  margin-bottom: 40px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.question-content .question-title {
+  font-size: 24px;
+  color: #333;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.question-content .question-title span {
+  display: block;
+  margin-top: 9px;
+  font-size: 16px;
+  color: #ddd;
+  height: 13px;
+  line-height: 13px;
+}
+.question-content dl.question-block {
+  margin-bottom: 30px;
+}
+.question-content dl.question-block dt {
+  font-size: 16px;
+  color: #333;
+  line-height: 16px;
+  margin-bottom: 14px;
+}
+.question-content dl.question-block dt span.red {
+  margin-right: 5px;
+  color: #f30;
+}
+.question-content dl.question-block dt b {
+  font-size: 12px;
+  color: #999;
+  font-weight: normal;
+  margin-left: 5px;
+}
+.question-content dl.question-block dd .nchtextarea {
+  width: 956px;
+}
+.question-content dl.question-block dd .nchtextarea textarea {
+  width: 936px;
+}
+.question-content dl.question-block dd .nchtextarea.error {
+  border-color: #e38;
+}
+.question-content dl.question-block dd.question-block-title .nchtextarea {
+  height: 70px;
+}
+.question-content dl.question-block dd.question-block-title .nchtextarea textarea {
+  height: 40px;
+}
+.question-content dl.question-block dd.question-block-detail .nchtextarea {
+  height: 126px;
+}
+.question-content dl.question-block dd.question-block-detail .nchtextarea textarea {
+  height: 96px;
+}
+.question-content .relation-input {
+  padding-left: 10px;
+  height: 28px;
+  line-height: 28px;
+  width: 438px;
+  font-size: 12px;
+  color: #333;
+  border: 1px solid #ccc;
+  outline: 0px;
+}
+.question-content .relation-input.error {
+  border-color: #e38;
+}
+.question-content dd.question-block-relation,
+.question-content dd.question-block-classic {
+  position: relative;
+}
+.question-content dd.question-block-relation span.btn-add,
+.question-content dd.question-block-classic span.btn-add {
+  padding: 0px 14px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  height: 24px;
+  line-height: 24px;
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  border-radius: 2px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-family: "Arial", "PingFang SC", "SimSun", serif;
+  font-size: 12px;
+  color: #666;
+  display: none;
+  *vertical-align: 8px;
+}
+.question-content dd.question-block-relation span.message-error,
+.question-content dd.question-block-classic span.message-error {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  height: 24px;
+  line-height: 24px;
+  margin-left: 10px;
+  font-size: 12px;
+  color: #333;
+  display: none;
+}
+.question-content dd.question-block-classic {
+  position: relative;
+}
+.question-content dd.question-block-classic .relation-input {
+  width: 395px;
+  padding-right: 43px;
+}
+.question-content dd.question-block-classic .tip-icon-down {
+  width: 13px;
+  height: 7px;
+  background-position: 0px -220px;
+  position: absolute;
+  top: 10px;
+  left: 420px;
+}
+.question-content dd.question-block-classic .up {
+  background-position: -20px -220px;
+}
+.float-relation-mdd {
+  position: absolute;
+  padding: 16px 14px 3px 14px;
+  border: 1px solid #ccc;
+  border-top: 0px;
+  background: #fff;
+  width: 420px;
+  display: none;
+}
+.float-relation-mdd dl {
+  margin-bottom: 12px;
+}
+.float-relation-mdd dt {
+  width: 34px;
+  margin-right: 10px;
+  float: left;
+  font-size: 12px;
+  color: #999;
+  line-height: 20px;
+}
+.float-relation-mdd dd {
+  width: 376px;
+  float: left;
+  margin-left: -6px;
+}
+.float-relation-mdd dd span {
+  display: block;
+  float: left;
+  margin-left: 6px;
+  font-size: 12px;
+  color: #333;
+  line-height: 20px;
+  max-height: 20px;
+  width: 69px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.float-relation-mdd dd span:hover {
+  color: #f60;
+}
+.tip-icon-error {
+  width: 14px;
+  height: 14px;
+  background-position: -20px -80px;
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+.relation-modify {
+  display: none;
+  padding-left: 11px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #333;
+  vertical-align: 0px;
+}
+.relation-modify .btn-modify {
+  font-size: 12px;
+  color: #3388dd;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.relation-modify .btn-modify:hover {
+  color: #f60;
+  text-decoration: none;
+}
+.tip-icon-map-gay {
+  width: 11px;
+  height: 13px;
+  background-position: -20px -200px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.float-relation-classic {
+  position: absolute;
+  padding: 19px 19px 0px 15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: 0px;
+  width: 414px;
+  display: none;
+}
+.float-relation-classic dl {
+  margin-bottom: 12px;
+}
+.float-relation-classic dt {
+  width: 54px;
+  /*margin-right: 10px;*/
+  float: left;
+  font-size: 12px;
+  color: #999;
+  line-height: 14px;
+}
+.float-relation-classic dd {
+  margin-left: -6px;
+  width: 366px;
+  float: left;
+}
+.float-relation-classic dd span {
+  display: block;
+  float: left;
+  height: 14px;
+  *height: 16px;
+  font-size: 12px;
+  color: #333;
+  line-height: 13px;
+  position: relative;
+  width: 85px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 7px;
+  margin-left: 6px;
+}
+.float-relation-classic dd span label {
+  cursor: pointer;
+}
+.float-relation-classic dd span:hover {
+  color: #f60;
+}
+.float-relation-classic dd span b {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 11px;
+  height: 11px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  vertical-align: text-bottom;
+}
+.float-relation-classic dd span b.cur {
+  background: url("http://pic.lvmama.com/img/v6/Q&A/question-icon.png") no-repeat 0px -240px;
+  border-color: #f80;
+}
+.float-relation-classic dd span input {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  cursor: pointer;
+}
+.question-block-classic + .relation-modify {
+  margin-left: -10px;
+}
+.question-block-classic + .relation-modify span.relation-place {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  height: 24px;
+  border: 1px solid #f2f2f2;
+  background: #f2f2f2;
+  line-height: 24px;
+  padding: 0px 9px;
+  margin: 0px 0px 10px 10px;
+  border-radius: 10px;
+}
+.nounce-box {
+  padding-top: 10px;
+  height: 13px;
+  line-height: 13px;
+  margin-bottom: 20px;
+}
+.nounce-box label {
+  cursor: pointer;
+}
+.nounce-box b {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 11px;
+  height: 11px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  vertical-align: text-bottom;
+}
+.nounce-box b.cur {
+  background: url("http://pic.lvmama.com/img/v6/Q&A/question-icon.png") no-repeat 0px -240px;
+  border-color: #f80;
+}
+.nounce-box input {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  cursor: pointer;
+}
+.nounce-box a {
+  font-size: 12px;
+  color: #3388dd;
+  line-height: 13px;
+}
+.nounce-box a:hover {
+  text-decoration: none;
+  color: #f60;
+}
+.sumbit-question {
+  vertical-align: middle;
+}
+.sumbit-question + .message-error {
+  margin-left: 10px;
+  display: none;
+}

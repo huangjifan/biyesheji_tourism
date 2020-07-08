@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.RemarklikeMapper">
+	<resultMap type="com.znsd.tubaba.entity.Remarklike" id="remarklikeResultMap">
+		<id property="id" column="id"/>
+		<result property="likenumber" column="likenumber"/>
+	</resultMap>
+	
+	<!-- 查询点赞数
+	 * remarkId 评论id -->
+	 <select id="queryByremaid" resultMap="remarklikeResultMap">
+	 	select * from remarklike where remarkid=#{remarkid}
+	 </select>
+	 
+	 <!-- 查询点赞的用户
+	 * remarkId 评论id
+	 * userid 用户id -->
+	 <select id="queryCount" resultType="int">
+	 	select count(1) from remarklike where userid=#{arg0} and remarkid=#{arg1}
+	 </select>
+	 
+	 <!-- 增加点赞表的记录 -->
+	 <insert id="addRemarkLike">
+	 	insert into remarklike(userid,remarkid) value(#{arg0},#{arg1})
+	 </insert>
+</mapper>

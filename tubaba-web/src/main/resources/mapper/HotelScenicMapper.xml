@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.HotelScenicMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+	
+	<resultMap type="com.znsd.tubaba.entity.HotelScenic" id="hotelScenicMapper">
+	    <id property="id" column="id"/>
+	    <result property="introduce" column="introduce"/>
+	    <result property="price" column="price"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.znsd.tubaba.entity.HotelScenic" id="hotelScenicMapperTwo">
+ 		 <id property="id" column="id"/>
+	    <result property="introduce" column="introduce"/>
+	    <result property="price" column="price"/>
+	    <association property="scenic"  column="scenicid" select="com.znsd.tubaba.mapper.ScenicMapper.queryScenic"></association>
+	    <association property="hotel" column="hotelid" select="com.znsd.tubaba.mapper.HotelMapper.queryOne"></association>
+ 	</resultMap>
+ 	
+ 	<!-- 查询热搜酒店+景点信息 -->
+	<select id="queryHotBotHotelScenic" resultMap="hotelScenicMapper">
+		SELECT hs.* FROM hotel_scenic hs INNER JOIN hotel_scenic_status hscsts ON hs.id = hscsts.hotel_scenicid
+		ORDER BY hscsts.browseCount DESC
+	</select>
+ 	<!-- 按景点名称模糊查询酒店+景点信息 -->
+ 	<select id="queryHotelScenicBySearchScenicname" resultMap="hotelScenicMapper">
+ 		SELECT hs.* FROM hotel_scenic hs INNER JOIN scenic sc ON hs.scenicid = sc.id
+		WHERE sc.scenicname LIKE CONCAT('%',#{scenicname},'%')
+ 	</select>
+ 	<!-- 按景点名称的拼音模糊查询酒店+景点信息 -->
+ 	<select id="queryHotelScenicBySearchScenicnamePinYin" resultMap="hotelScenicMapper">
+ 		SELECT hs.* FROM hotel_scenic hs INNER JOIN scenic sc ON hs.scenicid = sc.id
+		WHERE sc.scenicname_pinyin LIKE CONCAT('%',#{scenicname_pinyin},'%')
+ 	</select>
+ 	<select id="queryAll" resultMap="hotelScenicMapperTwo">
+ 		select * from hotel_scenic
+ 	</select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.znsd.tubaba.mapper.PlayManMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	
+	<resultMap type="PlayMan" id="playManMap">
+		<id property="id" column="id"/>
+		<result property="realname" column="realname"/>
+		<result property="iphone" column="iphone"/>
+		<result property="identity" column="identity"/>
+	</resultMap>
+	
+	<!-- 增加游玩人 -->
+	<insert id="addPlayMan" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO playman(realname,iphone,linkmanid,identity)
+		VALUES(#{realname},#{iphone},#{linkMan.id},#{identity});
+	</insert>
+	<!-- 批量增加游玩人 -->
+	<insert id="batchAddPlayMan">
+		INSERT INTO playman(realname,iphone,linkmanid,identity)
+		VALUES
+		<foreach collection="playMans" item="playMan" separator=",">
+			(#{playMan.realname},#{playMan.iphone},#{playMan.linkMan.id},#{playMan.identity})
+		</foreach>
+		
+	</insert>
+</mapper>
